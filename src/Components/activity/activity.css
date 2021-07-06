@@ -1,0 +1,113 @@
+.activity-section {
+    padding: 1rem;
+    border-top-left-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+    background-color: var(--SIDE_BAR_COLOR);
+}
+
+.hero-icon {
+    display: inline;
+}
+
+.search-div {
+    display: inline;
+}
+
+.activity-hero {
+
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.activity-input {
+    font-size: 20px;
+    display: inline;
+    border: 0;
+    height: 23px;
+    background-color: inherit;
+    outline: none;
+    width: 83%;
+}
+
+.act-ico {
+    color: gray;
+    font-size: 28px;
+}
+
+.act-icon {
+    color: green;
+    font-size: 40px;
+}
+
+.search-div {
+    border-radius: 1rem;
+    width: 220px;
+    padding: 0.7rem 0.5rem;
+    background-color: #e9f0f4;
+    display: flex;
+}
+
+.act-title-div {
+    color: gray;
+    margin: 1rem 0;
+}
+
+.activity-avatar {
+    border-radius: 50%;
+    margin: 0px;
+    padding: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: grey;
+    position: relative;
+    width: 36px;
+    height: 36px;
+}
+
+.av-nm-div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 55%;
+}
+
+.user-stat-div {
+    height: 240px;
+    overflow-y: scroll;
+}
+.user-stat-div::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+}
+/* .user-stat-div::-webkit-scrollbar-track-piece  {
+    background-color: #C2D2E4;
+} */
+
+.user-stat-div::-webkit-scrollbar-thumb:vertical {
+    background-color: #0A4C95;
+}
+
+.user-name-div {
+    width: 100px;
+}
+
+.online-status {
+    width: 10px;
+    height: 10px;
+    background-color: green;
+    border-radius: 50%;
+}
+
+.usr-stat-sec {
+    margin: 1rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.inact-div {
+    font-size: 12px;
+    color: gray;
+}
