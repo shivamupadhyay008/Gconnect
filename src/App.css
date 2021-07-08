@@ -1,5 +1,6 @@
-.App {
-  border: 5px solid white;
+.app-grd {
+
   display: grid;
+
   grid-template-columns: 1fr 2fr 1fr;
 }

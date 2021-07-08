@@ -1,0 +1,32 @@
+.text-area{
+    width:100%;
+    padding: 0.5rem;
+    font-size: 20px;
+    caret-color: blue;
+    resize: none;
+}
+.text-area:focus {
+    outline: none;
+}
+.pst-btn{
+    border:none ;
+    outline: none;
+}
+.pst-btn:active{
+    background-color: #037ec9;
+}
+.ps-icon{
+    padding: 0.3rem;
+    color:var(--BRAND_BLUE);
+    border-radius: 50%;
+    cursor: pointer;
+
+}
+.ps-icon:hover{
+color:whitesmoke;
+background-color: var(--BRAND_BLUE);
+cursor: pointer;
+}
+.ps-icon input{
+display: none;
+}

@@ -1,0 +1,14 @@
+.pf-usr {
+  font-size: 0.9rem;
+  font-weight: normal;
+  color: rgb(102, 102, 102);
+}
+.flw-bx {
+  padding-left: 0 0.5rem;
+  transition: transform 1s ease-in-out;
+  cursor: pointer;
+   border-bottom: 3px solid transparent;
+}
+.flw-bx:hover {
+  border-bottom: 3px solid var(--BRAND_BLUE);
+}

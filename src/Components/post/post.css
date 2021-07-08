@@ -2,13 +2,14 @@
   margin: 1rem 0.5rem;
 }
 .post-sec {
+  position: relative;
   display: flex;
   padding: 0.5rem;
   border: 1px solid #e9e9e9;
 }
 
-.post-sec{
-
+.post-sec:hover{
+background-color:#f8f8f8;
 }
 
 .post-avatar {
@@ -24,6 +25,7 @@
 }
 .post-pic {
  margin-left: 0.1rem;
+ width: 90px;
 margin-right: 0.5rem;
 }
 .title-head {

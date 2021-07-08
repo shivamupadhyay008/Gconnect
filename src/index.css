@@ -2,10 +2,13 @@
 
 :root{
   --SIDE_BAR_COLOR:#f6f9fb;
+  --BRAND_BLUE:#1da1f2;
+  --LIGHT_BLUE:#67b4e4;
 }
 body {
   scroll-behavior: smooth;
   margin: 0;
+  padding: 0;
   font-family: 'Roboto', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -14,4 +17,11 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.br-cr{
+    border: 1px solid #e9e9e9;
+}
+.bld{
+  font-weight: bold;
 }
