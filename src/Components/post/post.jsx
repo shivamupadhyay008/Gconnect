@@ -10,11 +10,10 @@ import {
   StackDivider,
   Button,
   VStack,
-  Avatar
+  Avatar,
 } from "@chakra-ui/react";
 import { AiOutlineHeart, AiTwotoneHeart } from "react-icons/ai";
 import { useState } from "react";
-
 export function CommentSection({ comments }) {
   return (
     <Box>
@@ -27,13 +26,17 @@ export function CommentSection({ comments }) {
           ? comments.map((item) => (
               <Box d="flex" mt="0.1rem" p="0 0.5rem">
                 <Box mr="0.3rem">
-                  <Avatar size="sm" src={item.userimage} />
+                  <Avatar
+                    size="sm"
+                    src={item?.userimage}
+                    name={item?.userName}
+                  />
                 </Box>
                 <Box w="100%">
                   <Box fontSize="0.8rem" fontWeight="bold">
-                    {item.userid}
+                    {item?.userid}
                   </Box>
-                  <Box fontSize="0.8rem"> {item.commentText}</Box>
+                  <Box fontSize="0.8rem"> {item?.commentText}</Box>
                 </Box>
               </Box>
             ))

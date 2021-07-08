@@ -9,7 +9,7 @@ export function ConnectProfile({ userImage, name, username, about }) {
           <Avatar size="md" scr={userImage} />
         </Box>
         <Flex w="100%">
-          <Box ml="0.5rem" w="70%">
+          <Box ml="0.5rem" w="80%">
             <Box fontWeight="bold" m="0">
               {name}
             </Box>
@@ -21,7 +21,7 @@ export function ConnectProfile({ userImage, name, username, about }) {
                 fontSize="0.9rem"
                 overflow="hidden"
                 textOverflow="ellipsis"
-                whiteSpace="nowrap"
+                whiteSpace="pre-line"
               >
                 {about}
               </Box>
@@ -29,14 +29,20 @@ export function ConnectProfile({ userImage, name, username, about }) {
               ""
             )}
           </Box>
-          <Box w="25%">
+          <Box
+            w="100px"
+            d="flex"
+            alignContent="center"
+            alignItems="center"
+            justifyContent="center"
+          >
             <Button
               borderRadius="2rem"
               bg={isFollowing ? "" : "var(--BRAND_BLUE)"}
               className="pst-btn"
               colorScheme="blue"
               variant={isFollowing ? "outline" : "solid"}
-              onClick={() => setIsFollowing((follow)=>!follow)}
+              onClick={() => setIsFollowing((follow) => !follow)}
             >
               {isFollowing ? "following" : "follow"}
             </Button>

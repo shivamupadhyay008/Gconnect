@@ -2,6 +2,9 @@ import "./followpage.css";
 import { Box } from "@chakra-ui/react";
 import { ConnectProfile } from "../index";
 import { HiArrowNarrowLeft } from "react-icons/hi";
+import { Link } from "react-router-dom";
+import { usersdata } from "../../data";
+const userData = usersdata;
 export function Followpage() {
   return (
     <Box>
@@ -31,12 +34,16 @@ export function Followpage() {
         <span className="con-title">Connect</span>
       </Box>
       <Box>
-        <ConnectProfile
-          name={"shivam"}
-          userImage={""}
-          username={"user@121"}
-          // about={"some hobbys : sdfjks | shiam up or kya ab kya"}
-        />
+        {userData.map((item) => (
+          <Link to={`/user/${item.userName}`}>
+            <ConnectProfile
+              name={item.name}
+              userImage={item.userImage}
+              username={item.userName}
+              about={item.about}
+            />
+          </Link>
+        ))}
       </Box>
     </Box>
   );

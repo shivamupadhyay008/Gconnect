@@ -1,22 +1,23 @@
-import { Navbar, CreatePost, Post, Followpage, Feed,ProfilePage } from "../index";
-import { Routes,Route } from "react-router-dom";
+import {
+  Navbar,
+  CreatePost,
+  Post,
+  Followpage,
+  Feed,
+  ProfilePage,
+  Notification
+} from "../index";
+import { Routes, Route } from "react-router-dom";
 export default function MainCluster() {
   return (
     <div>
-      <Navbar />
-      <Feed/>
-
-      {/* <ProfilePage
-        userId="shivam@1223"
-        followers={[10, 10]}
-        following={[1, 1, 1, 1]}
-        posts={[1, 1, 1, 1]}
-        about={
-          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt perferendis sapiente laudantium!"
-        }
-        userName="shivam upadhyay"
-      /> */}
-
+      <Navbar/>
+      <Routes>
+        <Route path="/" element={<Feed />} />
+        <Route path="/connection" element={<Followpage />} />
+        <Route path="/user/:id" element={<ProfilePage />} />
+        <Route path="/notification" element={<Notification/>}/>
+      </Routes>
     </div>
   );
 }
