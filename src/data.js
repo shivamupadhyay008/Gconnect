@@ -38,74 +38,24 @@ export const posts = [
     postedBy: {
       name: "shivam",
       image: "https://via.placeholder.com/150",
-      userId: "user@user",
+      username: "user@user",
       _id: "121",
     },
     likes: [{}, {}],
     comments: [
       {
-        userimage: "https://via.placeholder.com/150",
-        userid: "shivam02",
-        commentText:
-          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint provident harum sunt praesentium magnam dolor fuga earum quaerat cumque! ",
+        postedBy: {
+          userimage: "https://via.placeholder.com/150",
+          username: "shivam02",
+        },
+        text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint provident harum sunt praesentium magnam dolor fuga earum quaerat cumque! ",
       },
       {
-        userimage: "https://via.placeholder.com/150",
-        userid: "shivam02",
-        commentText:
-          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint provident harum sunt praesentium magnam dolor fuga earum quaerat cumque! ",
-      },
-    ],
-  },
-  {
-    _id: 2,
-    image: "https://via.placeholder.com/150",
-    body: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eligendi dolores facere, alias animi odio amet?",
-    postedBy: {
-      name: "shivam",
-      image: "https://via.placeholder.com/150",
-      userId: "user@user",
-      _id: "121",
-    },
-    likes: [{}, {}],
-    comments: [
-      {
-        userimage: "https://via.placeholder.com/150",
-        userid: "shivam02",
-        commentText:
-          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint provident harum sunt praesentium magnam dolor fuga earum quaerat cumque! ",
-      },
-      {
-        userimage: "https://via.placeholder.com/150",
-        userid: "shivam02",
-        commentText:
-          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint provident harum sunt praesentium magnam dolor fuga earum quaerat cumque! ",
-      },
-    ],
-  },
-  {
-    _id: 3,
-    image: "https://via.placeholder.com/150",
-    body: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eligendi dolores facere, alias animi odio amet?",
-    postedBy: {
-      name: "shivam",
-      image: "https://via.placeholder.com/150",
-      userId: "user@user",
-      _id: "121",
-    },
-    likes: [{}, {}],
-    comments: [
-      {
-        userimage: "https://via.placeholder.com/150",
-        userid: "shivam02",
-        commentText:
-          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint provident harum sunt praesentium magnam dolor fuga earum quaerat cumque! ",
-      },
-      {
-        userimage: "https://via.placeholder.com/150",
-        userid: "shivam02",
-        commentText:
-          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint provident harum sunt praesentium magnam dolor fuga earum quaerat cumque! ",
+        postedBy: {
+          userimage: "https://via.placeholder.com/150",
+          username: "shivam02",
+        },
+        text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint provident harum sunt praesentium magnam dolor fuga earum quaerat cumque! ",
       },
     ],
   },
@@ -118,8 +68,8 @@ export const userData = {
   about:
     "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt perferendis sapiente laudantium!",
   posts: posts,
-  followers:userDetails,
-  following:userDetails,
+  followers: userDetails,
+  following: userDetails,
 };
 export const usersdata = [
   {

@@ -21,22 +21,22 @@ export function CommentSection({ comments }) {
         <Input placeholder="Add a comment" mr="1rem" />{" "}
         <Button colorScheme="blue">Comment</Button>
       </Box>
-      <Box height="150px" overflowY="scroll" mt="0.4rem">
+      <Box height="90px" overflowY="scroll" mt="0.4rem">
         {comments.length > 0
           ? comments.map((item) => (
               <Box d="flex" mt="0.1rem" p="0 0.5rem">
                 <Box mr="0.3rem">
                   <Avatar
                     size="sm"
-                    src={item?.userimage}
-                    name={item?.userName}
+                    src={item?.postedBy?.image}
+                    name={item?.postedBy?.username}
                   />
                 </Box>
                 <Box w="100%">
                   <Box fontSize="0.8rem" fontWeight="bold">
-                    {item?.userid}
+                    {item?.postedBy?.username}
                   </Box>
-                  <Box fontSize="0.8rem"> {item?.commentText}</Box>
+                  <Box fontSize="0.8rem"> {item?.text}</Box>
                 </Box>
               </Box>
             ))
@@ -83,16 +83,16 @@ export function Post({
   const [showComments, setShowComments] = useState(false);
   return (
     <section className="post-sec">
-      <div className="post-pic">
-        <img class="post-avatar" src={userimage} alt="not found" />
+      <div className="post-pic" >
+        <Avatar class="post-avatar" src={userimage} alt="not found" />
       </div>
       <Box pr="0.5rem">
         <div className="post-body">
           <div className="title-head">
-            <div>
-              <span>{userName}</span>
-              <span className="uid-tm">{userId}</span>
-            </div>
+            <Flex alignItems="center">
+              <Box fontWeight="bold">{userName}</Box>
+              <Box fontSize="0.9rem" className="uid-tm">{userId}</Box>
+            </Flex>
             <div className="elips-cls" onClick={() => openOption(true)}>
               <IoEllipsisHorizontalOutline />
             </div>

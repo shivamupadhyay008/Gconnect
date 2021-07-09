@@ -24,7 +24,7 @@ export function Login() {
         </Heading>
         <Box>
           <InputComp
-            type={"em ail"}
+            type={"email"}
             placeHolder={"Enter your email"}
             text={email}
             setText={setEmail}
