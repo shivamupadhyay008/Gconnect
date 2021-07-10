@@ -8,15 +8,40 @@ const initialState = {
   error: null,
 };
 
-export const userLogin = createAsyncThunk("user/userLogin", async (name) => {
-  console.log("\n\n\n*********name is ssss************\n\n\n\n \n", name);
-  debugger;
-  const response = await axios.post(
-    "https://gConnect-backend.shivam008.repl.co/post/getallposts",
-    { heelo: "ss" }
-  );
-});
+export const userLogin = createAsyncThunk(
+  "user/userLogin",
+  async (credentials, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        "https://gConnect-backend.shivam008.repl.co/auth/login",
+        credentials,
+        {
+          headers: {
+            authentication: credentials.token,
+          },
+        }
+      );
 
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+export const userSignup = createAsyncThunk(
+  "user/userSignup",
+  async (credentials, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        "https://gConnect-backend.shivam008.repl.co/auth/signup",
+        credentials
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
 export const userSlice = createSlice({
   name: "user",
   initialState,
@@ -27,8 +52,23 @@ export const userSlice = createSlice({
     [userLogin.fulfilled]: (state, action) => {
       state.status = "fullfilled";
       state.userData.isUserLoggedIn = true;
+      state.userData = { ...state.userData, ...action.payload.user };
+      const token = localStorage.getItem("G_CONNECT_TOKEN");
+      if (token === "undefined") {
+        localStorage.setItem("G_CONNECT_TOKEN", action.payload.token);
+      }
     },
-    [userLogin.error]: (state, action) => {
+    [userLogin.rejected]: (state, action) => {
+      state.status = "error";
+      state.error = action.error.message;
+    },
+    [userSignup.pending]: (state, action) => {
+      state.status = "loading";
+    },
+    [userSignup.fulfilled]: (state, action) => {
+      state.status = "fullfilled";
+    },
+    [userSignup.rejected]: (state, action) => {
       state.status = "error";
       state.error = action.error.message;
     },

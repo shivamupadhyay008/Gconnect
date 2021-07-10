@@ -1,13 +1,25 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 import { getFeedPosts } from "../../apis/apis";
 
 const initialState = { posts: [], status: "idle", error: null };
 
 export const fetchPosts = createAsyncThunk("post/fetchPosts", async () => {
-  const {data} = await getFeedPosts();
-  console.log(data);
+  const { data } = await getFeedPosts();
   return data.posts;
 });
+
+export const likePostApi = async (data) => {
+  try {
+    const response = await axios.post(
+      "https://gConnect-backend.shivam008.repl.co/post/like",
+      data
+    );
+    return response;
+  } catch (error) {
+    return error.message;
+  }
+};
 
 export const postSlice = createSlice({
   name: "post",
@@ -17,6 +29,21 @@ export const postSlice = createSlice({
       console.log("state is", action.payload);
       return state;
     },
+    likePostReducer: (state, action) => {
+      return {
+        ...state,
+        posts: state.posts.map((post) => {
+          if (post._id === action.payload.data._id) {
+            return {
+              ...post,
+              likes: action.payload.data.likes,
+            };
+          } else {
+            return post;
+          }
+        }),
+      };
+    },
   },
   extraReducers: {
     [fetchPosts.pending]: (state, action) => {
@@ -24,14 +51,14 @@ export const postSlice = createSlice({
     },
     [fetchPosts.fulfilled]: (state, action) => {
       state.status = "fullfilled";
-      state.posts=state.posts.concat(action.payload)
+      state.posts = state.posts.concat(action.payload);
     },
-    [fetchPosts.error]: (state, action) => {
+    [fetchPosts.rejected]: (state, action) => {
       state.status = "error";
-      state.error=action.error.message;
+      state.error = action.error.message;
     },
   },
 });
 
-export const { addPosts } = postSlice.actions;
+export const { addPosts, likePostReducer } = postSlice.actions;
 export default postSlice.reducer;

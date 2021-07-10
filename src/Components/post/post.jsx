@@ -1,5 +1,6 @@
 import "./post.css";
 import { IoEllipsisHorizontalOutline } from "react-icons/io5";
+import { useSelector, useDispatch } from "react-redux";
 import { BiMessageSquare } from "react-icons/bi";
 import {
   Image,
@@ -13,8 +14,10 @@ import {
   Avatar,
 } from "@chakra-ui/react";
 import { AiOutlineHeart, AiTwotoneHeart } from "react-icons/ai";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { likePostApi ,likePostReducer} from "./posts.slice";
 export function CommentSection({ comments }) {
+  const userData = useSelector((state) => state.user);
   return (
     <Box>
       <Box d="flex">
@@ -24,7 +27,7 @@ export function CommentSection({ comments }) {
       <Box height="90px" overflowY="scroll" mt="0.4rem">
         {comments.length > 0
           ? comments.map((item) => (
-              <Box d="flex" mt="0.1rem" p="0 0.5rem">
+              <Box key={item._id} d="flex" mt="0.1rem" p="0 0.5rem">
                 <Box mr="0.3rem">
                   <Avatar
                     size="sm"
@@ -47,6 +50,7 @@ export function CommentSection({ comments }) {
 }
 
 export function PostOptions() {
+  const userData = useSelector((state) => state.user.userData);
   return (
     <Box
       borderRadius="0.4rem"
@@ -81,9 +85,17 @@ export function Post({
   const [liked, setLiked] = useState(false);
   const [option, openOption] = useState(false);
   const [showComments, setShowComments] = useState(false);
+  const userData = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (likes.some((item) => item === userData.userData._id)) {
+      setLiked(true);
+    }
+  }, []);
+  //
   return (
     <section className="post-sec">
-      <div className="post-pic" >
+      <div className="post-pic">
         <Avatar class="post-avatar" src={userimage} alt="not found" />
       </div>
       <Box pr="0.5rem">
@@ -91,7 +103,9 @@ export function Post({
           <div className="title-head">
             <Flex alignItems="center">
               <Box fontWeight="bold">{userName}</Box>
-              <Box fontSize="0.9rem" className="uid-tm">{userId}</Box>
+              <Box fontSize="0.9rem" className="uid-tm">
+                {userId}
+              </Box>
             </Flex>
             <div className="elips-cls" onClick={() => openOption(true)}>
               <IoEllipsisHorizontalOutline />
@@ -124,7 +138,20 @@ export function Post({
             <Box mt="0.1rem"> {comments.length} comments</Box>
           </Flex>
           <Flex display="inline-flex" justifyContent="center">
-            <Box onClick={() => setLiked((like) => !like)}>
+            <Box
+              onClick={async () => {
+                const res = await likePostApi({
+                  postid: id,
+                  userid: userData.userData._id,
+                });
+
+                if (res.status === 200) {
+                  console.log("working")
+                  dispatch(likePostReducer(res.data));
+                }
+                setLiked((like) => !like);
+              }}
+            >
               <Icon boxSize="2rem" _hover={{ cursor: "pointer" }}>
                 {liked ? (
                   <AiTwotoneHeart color="red" />
