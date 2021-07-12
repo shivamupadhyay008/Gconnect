@@ -15,16 +15,45 @@ import {
 } from "@chakra-ui/react";
 import { AiOutlineHeart, AiTwotoneHeart } from "react-icons/ai";
 import { useEffect, useState } from "react";
-import { likePostApi ,likePostReducer} from "./posts.slice";
-export function CommentSection({ comments }) {
+import {
+  likePostApi,
+  unlikePostApi,
+  commentApi,
+  addCommentReducer,
+  likePostReducer,
+} from "./posts.slice";
+export function CommentSection({ comments, postid }) {
+  const dispatch = useDispatch();
   const userData = useSelector((state) => state.user);
+  const [text, setText] = useState("");
   return (
     <Box>
       <Box d="flex">
-        <Input placeholder="Add a comment" mr="1rem" />{" "}
-        <Button colorScheme="blue">Comment</Button>
+        <Input
+          value={text}
+          placeholder="Add a comment"
+          mr="1rem"
+          onChange={(e) => setText(e.target.value)}
+        />{" "}
+        <Button
+          colorScheme="blue"
+          isDisabled={text.length === 0 ? true : false}
+          onClick={async () => {
+            console.log(postid, userData.userData._id);
+            const res = await commentApi({
+              postid,
+              text,
+              userid: userData.userData._id,
+            });
+            console.log(res.data);
+            dispatch(addCommentReducer(res.data));
+            setText("");
+          }}
+        >
+          Comment
+        </Button>
       </Box>
-      <Box height="90px" overflowY="scroll" mt="0.4rem">
+      <Box minH="max-content" maxH=" 90px" overflowY="scroll" mt="0.4rem">
         {comments.length > 0
           ? comments.map((item) => (
               <Box key={item._id} d="flex" mt="0.1rem" p="0 0.5rem">
@@ -92,7 +121,6 @@ export function Post({
       setLiked(true);
     }
   }, []);
-  //
   return (
     <section className="post-sec">
       <div className="post-pic">
@@ -140,13 +168,20 @@ export function Post({
           <Flex display="inline-flex" justifyContent="center">
             <Box
               onClick={async () => {
-                const res = await likePostApi({
-                  postid: id,
-                  userid: userData.userData._id,
-                });
-
+                let res = null;
+                if (liked) {
+                  res = await unlikePostApi({
+                    postid: id,
+                    userid: userData.userData._id,
+                  });
+                } else {
+                  res = await likePostApi({
+                    postid: id,
+                    userid: userData.userData._id,
+                  });
+                }
                 if (res.status === 200) {
-                  console.log("working")
+                  console.log("working");
                   dispatch(likePostReducer(res.data));
                 }
                 setLiked((like) => !like);
@@ -163,7 +198,7 @@ export function Post({
             <Box mt="0.1rem">{likes.length} likes</Box>
           </Flex>
         </Box>
-        {showComments ? <CommentSection comments={comments} /> : ""}
+        {showComments ? <CommentSection comments={comments} postid={id} /> : ""}
       </Box>
     </section>
   );

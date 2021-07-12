@@ -54,7 +54,8 @@ export const userSlice = createSlice({
       state.userData.isUserLoggedIn = true;
       state.userData = { ...state.userData, ...action.payload.user };
       const token = localStorage.getItem("G_CONNECT_TOKEN");
-      if (token === "undefined") {
+      console.log(token)
+      if (!token ) {
         localStorage.setItem("G_CONNECT_TOKEN", action.payload.token);
       }
     },

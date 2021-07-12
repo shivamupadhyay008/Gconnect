@@ -8,16 +8,14 @@ import { BsCameraVideo } from "react-icons/bs";
 import { FaTimes } from "react-icons/fa";
 import { useState } from "react";
 export function CreatePost({ userImg }) {
-  const [postText, setPostText] = useState(null);
+  const [postText, setPostText] = useState("");
   const [selectupload, setSelect] = useState(null);
-  console.log(selectupload);
   async function uploadImg() {
     try {
       const imageData = new FormData();
       imageData.append("file", selectupload);
       imageData.append("upload_preset", "gconnect");
       imageData.append("cloud_name", "shivam08");
-      console.log(imageData);
       const response = await axios.post(
         "https://api.cloudinary.com/v1_1/shivam08/image/upload",
         imageData
@@ -42,9 +40,7 @@ export function CreatePost({ userImg }) {
           <Box w="100%" borderBottom="1px solid #e9e9e9">
             <TextareaAutosize
               className="text-area"
-              onChange={(e) =>
-                setTimeout(() => setPostText(e.target.value), 1500)
-              }
+              onChange={(e) => setPostText(e.target.value)}
               placeholder="What's in your mind ?"
             />
             {selectupload ? (
@@ -81,10 +77,7 @@ export function CreatePost({ userImg }) {
                         id="icon-button-file"
                         type="file"
                         data-max-size="2048"
-                        onChange={(e) => {
-                          console.log(e.target.files[0]);
-                          setSelect(e.target.files[0]);
-                        }}
+                        onChange={(e) => setSelect(e.target.files[0])}
                       />
                       <IoImageOutline size="1.2rem" />
                     </label>
@@ -97,7 +90,7 @@ export function CreatePost({ userImg }) {
                       <input
                         id="icon-button-file"
                         type="file"
-                        accept="video/*"
+                        accept="image/*"
                         onChange={(e) => setSelect(e.target.files[0])}
                       />
                       <AiOutlineGif size="1.2rem" />
@@ -111,7 +104,7 @@ export function CreatePost({ userImg }) {
                       <input
                         id="icon-button-file"
                         type="file"
-                        accept="video/*"
+                        accept="image/*"
                         onChange={(e) => setSelect(e.target.files[0])}
                       />
                       <BsCameraVideo size="1.2rem" />
@@ -121,6 +114,9 @@ export function CreatePost({ userImg }) {
               </Box>
               <Box>
                 <Button
+                  isDisabled={
+                    postText.length === 0 && !selectupload ? true : false
+                  }
                   borderRadius="2rem"
                   colorScheme="#1da1f2"
                   bg="var(--BRAND_BLUE)"

@@ -4,22 +4,12 @@ import { getFeedPosts } from "../../apis/apis";
 
 const initialState = { posts: [], status: "idle", error: null };
 
+const gcUrl = "https://gConnect-backend.shivam008.repl.co";
+
 export const fetchPosts = createAsyncThunk("post/fetchPosts", async () => {
   const { data } = await getFeedPosts();
   return data.posts;
 });
-
-export const likePostApi = async (data) => {
-  try {
-    const response = await axios.post(
-      "https://gConnect-backend.shivam008.repl.co/post/like",
-      data
-    );
-    return response;
-  } catch (error) {
-    return error.message;
-  }
-};
 
 export const postSlice = createSlice({
   name: "post",
@@ -30,6 +20,7 @@ export const postSlice = createSlice({
       return state;
     },
     likePostReducer: (state, action) => {
+      console.log(action);
       return {
         ...state,
         posts: state.posts.map((post) => {
@@ -43,6 +34,14 @@ export const postSlice = createSlice({
           }
         }),
       };
+    },
+    addCommentReducer: (state, action) => {
+      console.log("payload",{...action.payload.data},"\n\n\nsds      ");
+      state.posts.forEach((item) =>{
+        if(item._id===action.payload.data._id){
+          item.comments=action.payload.data.comments;
+        }
+      } )
     },
   },
   extraReducers: {
@@ -60,5 +59,41 @@ export const postSlice = createSlice({
   },
 });
 
-export const { addPosts, likePostReducer } = postSlice.actions;
+export const likePostApi = async (data) => {
+  try {
+    const response = await axios.post(`${gcUrl}/post/like`, data);
+    return response;
+  } catch (error) {
+    return error.message;
+  }
+};
+
+export const unlikePostApi = async (data) => {
+  try {
+    const response = await axios.post(`${gcUrl}/post/unlike`, data);
+    return response;
+  } catch (error) {
+    return error.message;
+  }
+};
+export const commentApi = async (data) => {
+  try {
+    const response = await axios.post(`${gcUrl}/post/comment`, data);
+    return response;
+  } catch (error) {
+    return error.message;
+  }
+};
+
+export const deleteCommentApi = async (data) => {
+  try {
+    const response = await axios.post(`${gcUrl}/post/removecomment`, data);
+    return response;
+  } catch (error) {
+    return error.message;
+  }
+};
+
+export const { addPosts, likePostReducer, addCommentReducer } =
+  postSlice.actions;
 export default postSlice.reducer;

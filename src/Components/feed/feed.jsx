@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { Spinner, Box } from "@chakra-ui/react";
 export function Feed() {
   const posts = useSelector((state) => state.posts.posts);
+  const userImage = useSelector((state) => state.user.userData.image);
   const postStatus = useSelector((state) => state.posts.status);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -12,7 +13,7 @@ export function Feed() {
   }, []);
   return (
     <section>
-      <CreatePost userImg={"https://via.placeholder.com/100"} />
+      <CreatePost userImg={userImage} />
       {postStatus === "fullfilled" ? (
         posts?.map((item) => {
           return (
