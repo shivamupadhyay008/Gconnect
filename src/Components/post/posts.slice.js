@@ -36,12 +36,14 @@ export const postSlice = createSlice({
       };
     },
     addCommentReducer: (state, action) => {
-      console.log("payload",{...action.payload.data},"\n\n\nsds      ");
-      state.posts.forEach((item) =>{
-        if(item._id===action.payload.data._id){
-          item.comments=action.payload.data.comments;
+      state.posts.forEach((item) => {
+        if (item._id === action.payload.data._id) {
+          item.comments = action.payload.data.comments;
         }
-      } )
+      });
+    },
+    addNewPost: (state, action) => {
+      state.posts.unshift(action.payload.newUserPost);
     },
   },
   extraReducers: {
@@ -76,6 +78,7 @@ export const unlikePostApi = async (data) => {
     return error.message;
   }
 };
+
 export const commentApi = async (data) => {
   try {
     const response = await axios.post(`${gcUrl}/post/comment`, data);
@@ -94,6 +97,14 @@ export const deleteCommentApi = async (data) => {
   }
 };
 
-export const { addPosts, likePostReducer, addCommentReducer } =
+export const createPostApi = async (data) => {
+  try {
+    const response = await axios.post(`${gcUrl}/post/createpost`, data);
+    return response;
+  } catch (error) {
+    return error.message;
+  }
+};
+export const { addPosts, likePostReducer, addNewPost, addCommentReducer } =
   postSlice.actions;
 export default postSlice.reducer;

@@ -1,8 +1,8 @@
 import "./login.css";
-import { Box, Input, Heading, Flex, Button, FormLabel } from "@chakra-ui/react";
+import { Box, Input, Heading,Button, FormLabel } from "@chakra-ui/react";
 import { useSelector, useDispatch } from "react-redux";
 import { userLogin,userSignup } from "./user.slice";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { useNavigate } from "react-router";
 export function InputComp({ type, placeHolder, text, setText, isValid }) {
   return (
@@ -21,7 +21,6 @@ export function InputComp({ type, placeHolder, text, setText, isValid }) {
 
 export function Login() {
   const userData = useSelector((state) => state.user);
-  const error=useSelector((state)=>state.user.error)
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");

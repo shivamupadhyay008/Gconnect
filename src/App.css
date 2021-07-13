@@ -1,6 +1,14 @@
 .app-grd {
-
   display: grid;
 
   grid-template-columns: 1fr 2fr 1fr;
+}
+
+@media only screen and (max-width: 600px) {
+  .app-grd{
+    display: inline;
+  }
+  .app-grd .chl-fs,.chl-thr {
+    display: none;
+  }
 }

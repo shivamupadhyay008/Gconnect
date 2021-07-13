@@ -1,13 +1,5 @@
-import {
-  Navbar,
-  CreatePost,
-  Post,
-  Followpage,
-  Feed,
-  ProfilePage,
-  Notification,
-} from "../index";
-import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import { Navbar, Followpage, Feed, ProfilePage, Notification } from "../index";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 export function PrivateRoute({ isUserLoggedIn, path, ...props }) {
   return isUserLoggedIn ? (
@@ -19,7 +11,6 @@ export function PrivateRoute({ isUserLoggedIn, path, ...props }) {
 
 export default function MainCluster() {
   const userData = useSelector((state) => state.user.userData);
-
 
   return (
     <div>

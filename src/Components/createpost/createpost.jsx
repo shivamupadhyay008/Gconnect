@@ -1,5 +1,7 @@
-import "./createpost.css";
 import axios from "axios";
+import "./createpost.css";
+import { useSelector, useDispatch } from "react-redux";
+import { addNewPost, createPostApi } from "../post/posts.slice";
 import { Avatar, Box, Flex, Button } from "@chakra-ui/react";
 import TextareaAutosize from "react-textarea-autosize";
 import { IoImageOutline } from "react-icons/io5";
@@ -8,19 +10,31 @@ import { BsCameraVideo } from "react-icons/bs";
 import { FaTimes } from "react-icons/fa";
 import { useState } from "react";
 export function CreatePost({ userImg }) {
+  const dispatch = useDispatch();
+  const userid = useSelector((state) => state.user.userData._id);
   const [postText, setPostText] = useState("");
   const [selectupload, setSelect] = useState(null);
   async function uploadImg() {
     try {
-      const imageData = new FormData();
-      imageData.append("file", selectupload);
-      imageData.append("upload_preset", "gconnect");
-      imageData.append("cloud_name", "shivam08");
-      const response = await axios.post(
-        "https://api.cloudinary.com/v1_1/shivam08/image/upload",
-        imageData
-      );
-      console.log(response);
+      let imageresponse = null;
+      if (selectupload) {
+        const imageData = new FormData();
+        imageData.append("file", selectupload);
+        imageData.append("upload_preset", "gconnect");
+        imageData.append("cloud_name", "shivam08");
+        imageresponse = await axios.post(
+          "https://api.cloudinary.com/v1_1/shivam08/image/upload",
+          imageData
+        );
+      }
+      const postResponse = await createPostApi({
+        userid,
+        body: postText,
+        image: imageresponse?.data?.url,
+      });
+      dispatch(addNewPost(postResponse.data));
+      setPostText("");
+      setSelect(null);
     } catch (err) {
       console.log(err.message);
     }
@@ -39,6 +53,7 @@ export function CreatePost({ userImg }) {
         <Box w="100%" mt="0.5rem" mr="0.5rem">
           <Box w="100%" borderBottom="1px solid #e9e9e9">
             <TextareaAutosize
+              value={postText}
               className="text-area"
               onChange={(e) => setPostText(e.target.value)}
               placeholder="What's in your mind ?"

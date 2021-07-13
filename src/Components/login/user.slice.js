@@ -54,13 +54,14 @@ export const userSlice = createSlice({
       state.userData.isUserLoggedIn = true;
       state.userData = { ...state.userData, ...action.payload.user };
       const token = localStorage.getItem("G_CONNECT_TOKEN");
-      console.log(token)
-      if (!token ) {
+      console.log(token);
+      if (!token) {
         localStorage.setItem("G_CONNECT_TOKEN", action.payload.token);
       }
     },
     [userLogin.rejected]: (state, action) => {
       state.status = "error";
+      localStorage.removeItem("G_CONNECT_TOKEN");
       state.error = action.error.message;
     },
     [userSignup.pending]: (state, action) => {

@@ -79,7 +79,6 @@ export function CommentSection({ comments, postid }) {
 }
 
 export function PostOptions() {
-  const userData = useSelector((state) => state.user.userData);
   return (
     <Box
       borderRadius="0.4rem"
@@ -142,15 +141,19 @@ export function Post({
         </div>
         <div onClick={() => openOption(false)}>
           <div className="post-content">{postbody}</div>
-          <Box w="100%" d="flex" justifyContent="center">
-            <Image
-              borderRadius="1rem"
-              mt="1rem"
-              h="250px"
-              w="90%"
-              src={postimg}
-            />
-          </Box>
+          {postimg ? (
+            <Box w="100%" d="flex" justifyContent="center">
+              <Image
+                borderRadius="1rem"
+                mt="1rem"
+                h="250px"
+                w="90%"
+                src={postimg}
+              />
+            </Box>
+          ) : (
+            ""
+          )}
         </div>
         <Box display="flex" mt="0.5rem">
           {option ? <PostOptions /> : ""}

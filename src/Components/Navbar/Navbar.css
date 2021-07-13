@@ -10,7 +10,7 @@
 .nav-bar {
     background-color: var(--SIDE_BAR_COLOR);
     height: 10vh;
-    width: 70%;
+    width: 100%;
     border-bottom-left-radius: 1rem;
     border-bottom-right-radius: 1rem;
     display: flex;

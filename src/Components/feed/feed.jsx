@@ -1,4 +1,4 @@
-import { addPosts, fetchPosts } from "../post/posts.slice";
+import { fetchPosts } from "../post/posts.slice";
 import { Post, CreatePost } from "../index";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
