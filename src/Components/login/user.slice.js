@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+
 const initialState = {
   userData: {
     isUserLoggedIn: false,
@@ -52,6 +53,7 @@ export const userSlice = createSlice({
     [userLogin.fulfilled]: (state, action) => {
       state.status = "fullfilled";
       state.userData.isUserLoggedIn = true;
+      console.log(action)
       state.userData = { ...state.userData, ...action.payload.user };
       const token = localStorage.getItem("G_CONNECT_TOKEN");
       console.log(token);
@@ -69,6 +71,7 @@ export const userSlice = createSlice({
     },
     [userSignup.fulfilled]: (state, action) => {
       state.status = "fullfilled";
+      state.userData = action.payload.users
     },
     [userSignup.rejected]: (state, action) => {
       state.status = "error";

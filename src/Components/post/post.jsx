@@ -123,7 +123,7 @@ export function Post({
   return (
     <section className="post-sec">
       <div className="post-pic">
-        <Avatar class="post-avatar" src={userimage} alt="not found" />
+        <Avatar className="post-avatar" src={userimage} alt="not found" />
       </div>
       <Box pr="0.5rem">
         <div className="post-body">

@@ -1,10 +1,21 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { getFeedPosts } from "../../apis/apis";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = { posts: [], status: "idle", error: null };
 
 const gcUrl = "https://gConnect-backend.shivam008.repl.co";
+
+export async function getFeedPosts() {
+  try {
+    const response = await axios.get(
+      "https://gConnect-backend.shivam008.repl.co/post/getallposts"
+    );
+    return response;
+  } catch (error) {
+    console.log(error.message);
+    return error;
+  }
+}
 
 export const fetchPosts = createAsyncThunk("post/fetchPosts", async () => {
   const { data } = await getFeedPosts();

@@ -28,7 +28,7 @@ export default function MainCluster() {
         />
         <PrivateRoute
           isUserLoggedIn={userData.isUserLoggedIn}
-          path="/user/:id"
+          path="/user/:username"
           element={<ProfilePage />}
         />
         <PrivateRoute

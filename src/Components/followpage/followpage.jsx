@@ -1,11 +1,26 @@
 import "./followpage.css";
-import { Box } from "@chakra-ui/react";
+import { Box,Spinner } from "@chakra-ui/react";
 import { ConnectProfile } from "../index";
 import { HiArrowNarrowLeft } from "react-icons/hi";
-import { Link } from "react-router-dom";
-import { usersdata } from "../../data";
-const userData = usersdata;
+import { fetchUsers } from "./followList.slice";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+
 export function Followpage() {
+  const dispatch = useDispatch();
+  const status = useSelector((state) => state.usersArray.status);
+  const userData = useSelector((state) => state.usersArray.usersList);
+  const user= useSelector((state) => state.user.userData);
+  const error = useSelector((state) => state.usersArray.error);
+  console.log("status ye hai", status, error);
+  useEffect(() => {
+    console.log("working in effect");
+    if (status === "idle") {
+      console.log("idle");
+      dispatch(fetchUsers(user._id));
+    }
+  },[]);
   return (
     <Box>
       <Box
@@ -34,16 +49,21 @@ export function Followpage() {
         <span className="con-title">Connect</span>
       </Box>
       <Box>
-        {userData.map((item) => (
-          <Link to={`/user/${item.userName}`}>
+        {status === "loading" ? (
+          <Box p="1rem" textAlign="center">
+            <Spinner color="blue.400" size="lg" />
+          </Box>
+        ) : (
+          userData.map((item) => (
             <ConnectProfile
+              key={item._id}
               name={item.name}
               userImage={item.userImage}
-              username={item.userName}
-              about={item.about}
+              username={item.username}
+              about={""}
             />
-          </Link>
-        ))}
+          ))
+        )}
       </Box>
     </Box>
   );

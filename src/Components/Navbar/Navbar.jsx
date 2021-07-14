@@ -6,8 +6,9 @@ import { IoMdTime } from "react-icons/io";
 import { CgFlagAlt } from "react-icons/cg";
 import { RiSettingsLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
-
+import { useSelector } from "react-redux";
 export function Navbar() {
+  const username = useSelector((state) => state.user.userData.username);
   return (
     <section className="nav-sec">
       <div className="nav-bar-div">
@@ -33,7 +34,7 @@ export function Navbar() {
           <div className={`nav-div-icon`}>
             <CgFlagAlt />
           </div>
-          <Link to={`/user/shivam`}>
+          <Link to={`/user/${username}`}>
             <div className={`nav-div-icon`}>
               <RiSettingsLine />
             </div>
