@@ -43,20 +43,26 @@ export const userSignup = createAsyncThunk(
     }
   }
 );
+
 export const userSlice = createSlice({
   name: "user",
   initialState,
+  reducers: {
+    addFollowing: (state, action) => {
+      state.userData.following = action.payload;
+    },
+  },
   extraReducers: {
-    [userLogin.pending]: (state, action) => {
+    [userLogin.pending]: (state) => {
       state.status = "loading";
     },
     [userLogin.fulfilled]: (state, action) => {
       state.status = "fullfilled";
       state.userData.isUserLoggedIn = true;
-      console.log(action)
+
       state.userData = { ...state.userData, ...action.payload.user };
       const token = localStorage.getItem("G_CONNECT_TOKEN");
-      console.log(token);
+
       if (!token) {
         localStorage.setItem("G_CONNECT_TOKEN", action.payload.token);
       }
@@ -71,7 +77,7 @@ export const userSlice = createSlice({
     },
     [userSignup.fulfilled]: (state, action) => {
       state.status = "fullfilled";
-      state.userData = action.payload.users
+      state.userData = action.payload.users;
     },
     [userSignup.rejected]: (state, action) => {
       state.status = "error";
@@ -79,5 +85,5 @@ export const userSlice = createSlice({
     },
   },
 });
-
+export const { addFollowing } = userSlice.actions;
 export default userSlice.reducer;

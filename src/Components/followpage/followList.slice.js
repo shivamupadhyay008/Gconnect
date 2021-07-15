@@ -8,15 +8,14 @@ const gcUrl = "https://gConnect-backend.shivam008.repl.co";
 export const fetchUsers = createAsyncThunk(
   "userlist/fetchUsers",
   async (action,{ rejectWithValue }) => {
-    console.log("working",action);
 
     try {
-      console.log("working");
+
       const response = await axios.post(
         "https://gConnect-backend.shivam008.repl.co/user/users",
         { userid:action }
       );
-      console.log(response);
+
       return response.data;
     } catch (err) {
       console.log("this is error",err);
@@ -28,19 +27,13 @@ export const fetchUsers = createAsyncThunk(
 export const usersList = createSlice({
   name: "userlist",
   initialState,
-  reducers: {
-    // addPosts: (state, action) => {
-    //   console.log("state is", action.payload);
-    //   return state;
-    // },
-  },
+
   extraReducers: {
     [fetchUsers.pending]: (state, action) => {
       state.status = "loading";
     },
     [fetchUsers.fulfilled]: (state, action) => {
       state.status = "fullfilled";
-      console.log(action);
       state.usersList=action.payload.users;
     },
     [fetchUsers.rejected]: (state, action) => {

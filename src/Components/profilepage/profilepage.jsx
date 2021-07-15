@@ -1,38 +1,65 @@
 import "./profile.css";
 import { Post } from "../index";
-import { Box, Flex, Avatar, Button } from "@chakra-ui/react";
+import { Box, Flex, Avatar, Spinner, Button } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getUserThunk } from "./userprofile.slice";
+import { addFollowing } from "../login/user.slice";
+import { getUserApi, userFollow, userUnfollow } from "../../apis/apis";
 import { useParams } from "react-router-dom";
 export function ProfilePage() {
   let { username } = useParams();
-  let dispatch = useDispatch();
+  const dispatch = useDispatch();
   const [userData, setUserData] = useState(null);
-  const [showbtn, setbtn] = useState(false);
   const [isFollowing, setIsFollowing] = useState(false);
-  console.log(username);
-  if (true) {
-  }
   const userprofileData = useSelector((state) => state.user);
-  const profileData = useSelector((state) => state.profile);
   useEffect(() => {
-    if (username !== userprofileData.userData.username) {
-      console.log("yes its right");
-        dispatch(
-          getUserThunk({ userid: userprofileData.userData._id, username })
-        );
-      console.log(profileData.profileData);
-      setUserData(profileData.profileData);
+    (async () => {
+      if (username !== userprofileData.userData.username) {
+        const res = await getUserApi({
+          userid: userprofileData.userData._id,
+          username,
+        });
+        if (res.status === 200) {
+          setUserData(res.data.userdata);
+        }
+      } else {
+        setUserData(userprofileData.userData);
+      }
+    })();
+  }, [username]);
+  useEffect(() => {
+    if (
+      userprofileData.userData.following.some(
+        (item) => item._id === userData?._id
+      )
+    ) {
+      setIsFollowing(true);
     }
-    else{
-      setUserData(userprofileData.userData);
-      // console.log(userprofileData);
-      // debugger;
-    }
-  }, []);
+  }, [userData]);
 
-  // console.log(userData.username);
+  const follow = async (data) => {
+    const res = await userFollow(data);
+    if (res.status === 200) {
+      dispatch(addFollowing(res.data.followeruser.following));
+      setUserData((state) => {
+        return { ...state, followers: res.data.followinguser.followers };
+      });
+    }
+
+    setIsFollowing((follow) => true);
+  };
+
+  const unFollow = async (data) => {
+    const res = await userUnfollow(data);
+    if (res.status === 200) {
+      dispatch(addFollowing(res.data.followeruser.following));
+      setUserData((state) => {
+        return { ...state, followers: res.data.followinguser.followers };
+      });
+    }
+    setIsFollowing((follow) => false);
+  };
+
   return (
     <section>
       {userData ? (
@@ -59,7 +86,7 @@ export function ProfilePage() {
                   <span className="pf-usr">{userData.username}</span>
                 </Box>
                 <Box mr="1rem">
-                  {username === "shivam" ? (
+                  {username === userprofileData.userData.username ? (
                     <Button
                       borderRadius="2rem"
                       variant="outline"
@@ -74,7 +101,17 @@ export function ProfilePage() {
                       className="pst-btn"
                       colorScheme="blue"
                       variant={isFollowing ? "outline" : "solid"}
-                      onClick={() => setIsFollowing((follow) => !follow)}
+                      onClick={() => {
+                        isFollowing
+                          ? unFollow({
+                              followerId: userprofileData.userData._id,
+                              followingId: userData._id,
+                            })
+                          : follow({
+                              followerId: userprofileData.userData._id,
+                              followingId: userData._id,
+                            });
+                      }}
                     >
                       {isFollowing ? "following" : "follow"}
                     </Button>
@@ -104,23 +141,30 @@ export function ProfilePage() {
             </Box>
           </Box>
           <div>
-            {userData && userData.posts
-              ? userData.posts.map((item) => (
-                  <Post
-                    postbody={item.body}
-                    id={item._id}
-                    likes={item.likes}
-                    postimg={item.image}
-                    userName={item.postedBy.name}
-                    comments={item.comments}
-                    userimage={item.postedBy.image}
-                  />
-                ))
-              : ""}
+            {userData && userData.posts && userData.posts.length !== 0 ? (
+              userData.posts.map((item) => (
+                <Post
+                  key={item.postedBy.image}
+                  postbody={item.body}
+                  id={item._id}
+                  likes={item.likes}
+                  postimg={item.image}
+                  userName={item.postedBy.name}
+                  comments={item.comments}
+                  userimage={item.postedBy.image}
+                />
+              ))
+            ) : (
+              <Box p="1rem" fontSize="1.2rem" textAlign="center">
+                no posts yet
+              </Box>
+            )}
           </div>
         </div>
       ) : (
-        <></>
+        <Box p="1rem" textAlign="center">
+          <Spinner color="blue.400" size="lg" />
+        </Box>
       )}
     </section>
   );
