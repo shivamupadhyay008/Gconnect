@@ -11,7 +11,7 @@ import { FaTimes } from "react-icons/fa";
 import { useState } from "react";
 export function CreatePost({ userImg }) {
   const dispatch = useDispatch();
-  const userid = useSelector((state) => state.user.userData._id);
+  const userdata = useSelector((state) => state.user.userData);
   const [postText, setPostText] = useState("");
   const [selectupload, setSelect] = useState(null);
   async function uploadImg() {
@@ -28,7 +28,7 @@ export function CreatePost({ userImg }) {
         );
       }
       const postResponse = await createPostApi({
-        userid,
+        userid: userdata._id,
         body: postText,
         image: imageresponse?.data?.url,
       });
@@ -46,7 +46,7 @@ export function CreatePost({ userImg }) {
           <Avatar
             w="3rem"
             borderRadius="50%"
-            name="Prosper Otemuyiwa"
+            name={userdata.name}
             src={userImg}
           />
         </Box>

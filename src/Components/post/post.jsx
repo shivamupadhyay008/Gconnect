@@ -13,6 +13,7 @@ import {
   VStack,
   Avatar,
 } from "@chakra-ui/react";
+import {Link} from "react-router-dom";
 import { AiOutlineHeart, AiTwotoneHeart } from "react-icons/ai";
 import { useEffect, useState } from "react";
 import {
@@ -78,28 +79,6 @@ export function CommentSection({ comments, postid }) {
   );
 }
 
-export function PostOptions() {
-  return (
-    <Box
-      borderRadius="0.4rem"
-      cursor="pointer"
-      pos="absolute"
-      bg="#d3d3d3"
-      top="0.5rem"
-      right="1rem"
-      p="0.5rem"
-      border="1px solid #8e8e8e"
-    >
-      <VStack
-        divider={<StackDivider borderColor="gray.200" />}
-        spacing={4}
-        align="stretch"
-      >
-        <span>Delete</span>
-      </VStack>
-    </Box>
-  );
-}
 export function Post({
   id,
   userimage,
@@ -120,20 +99,28 @@ export function Post({
       setLiked(true);
     }
   }, []);
+
   return (
     <section className="post-sec">
       <div className="post-pic">
-        <Avatar className="post-avatar" src={userimage} alt="not found" />
+        <Avatar
+          className="post-avatar"
+          name={userName}
+          src={userimage}
+          alt="not found"
+        />
       </div>
       <Box pr="0.5rem">
         <div className="post-body">
           <div className="title-head">
-            <Flex alignItems="center">
-              <Box fontWeight="bold">{userName}</Box>
-              <Box fontSize="0.9rem" className="uid-tm">
-                {userId}
-              </Box>
-            </Flex>
+            <Link to={`/user/${userId}`}>
+              <Flex alignItems="center">
+                <Box fontWeight="bold">{userName}</Box>
+                <Box fontSize="0.9rem" className="uid-tm">
+                  {userId}
+                </Box>
+              </Flex>
+            </Link>
             <div className="elips-cls" onClick={() => openOption(true)}>
               <IoEllipsisHorizontalOutline />
             </div>
@@ -156,7 +143,6 @@ export function Post({
           )}
         </div>
         <Box display="flex" mt="0.5rem">
-          {option ? <PostOptions /> : ""}
           <Flex
             display="inline-flex"
             justifyContent="center"

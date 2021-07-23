@@ -1,27 +1,41 @@
 import axios from "axios";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-const initialState = { posts: [], status: "idle", error: null };
-
 const gcUrl = "https://gConnect-backend.shivam008.repl.co";
 
-export async function getFeedPosts() {
-  try {
-    const response = await axios.get(
-      "https://gConnect-backend.shivam008.repl.co/post/getallposts"
-    );
-    return response;
-  } catch (error) {
-    console.log(error.message);
-    return error;
+const initialState = {
+  explorePosts: [],
+  posts: [],
+  status: "idle",
+  error: null,
+};
+
+export const fetchPosts = createAsyncThunk(
+  "post/fetchPosts",
+  async (action, { rejectWithValue }) => {
+    try {
+      console.log(action);
+      const response = await axios.get(`${gcUrl}/post/feed/${action}`);
+      console.log(response.data.posts)
+      return response.data.posts;
+    } catch (error) {
+      console.log(error.message);
+      return rejectWithValue(error.message);
+    }
   }
-}
-
-export const fetchPosts = createAsyncThunk("post/fetchPosts", async () => {
-  const { data } = await getFeedPosts();
-  return data.posts;
-});
-
+);
+export const fetchExplorePosts = createAsyncThunk(
+  "post/fetchExplorePosts",
+  async (action, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`${gcUrl}/post/getallposts`);
+      return response.data.posts;
+    } catch (error) {
+      console.log(error.message);
+      return rejectWithValue(error.message);
+    }
+  }
+);
 export const postSlice = createSlice({
   name: "post",
   initialState,
@@ -66,6 +80,17 @@ export const postSlice = createSlice({
       state.posts = state.posts.concat(action.payload);
     },
     [fetchPosts.rejected]: (state, action) => {
+      state.status = "error";
+      state.error = action.error.message;
+    },
+    [fetchExplorePosts.pending]: (state, action) => {
+      state.status = "loading";
+    },
+    [fetchExplorePosts.fulfilled]: (state, action) => {
+      state.status = "fullfilled";
+      state.explorePosts = state.explorePosts.concat(action.payload);
+    },
+    [fetchExplorePosts.rejected]: (state, action) => {
       state.status = "error";
       state.error = action.error.message;
     },

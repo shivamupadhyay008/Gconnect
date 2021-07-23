@@ -1,5 +1,9 @@
 .nav-sec {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
     display: flex;
+    z-index:1;
     flex-direction: column  ;
 }
 .nav-bar-div
@@ -32,6 +36,15 @@
 
 }
 .icon-active{
-    color:aqua;
-    background-color: rgb(16, 16, 97);
+    color:white;
+    background-color:var(--BRAND_BLUE);
+}
+.mobile-nav{
+    display: none;
+}
+@media screen and  (max-width:600px) {
+.mobile-nav{
+    display:block;
+}
+
 }

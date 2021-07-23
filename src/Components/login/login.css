@@ -3,9 +3,9 @@
   width: 100%;
   z-index: 3;
   height: 100vh;
-display:flex;
-align-items: center;
-justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: rgba(186, 202, 208, 0.4);
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
   backdrop-filter: blur(3px);
@@ -14,13 +14,21 @@ justify-content: center;
   border: 1px solid rgba(255, 255, 255, 0.18);
   margin: auto;
 }
+
+
+
 .login-div {
   margin: auto;
   padding: 0 2rem;
   border-radius: 1rem;
- box-shadow: 1px 0px 20px -4px rgba(0,0,0,0.62);
+  box-shadow: 1px 0px 20px -4px rgba(0, 0, 0, 0.62);
   background-color: white;
   width: 35%;
   min-height: 50vh;
   text-align: center;
+}
+.login-dv-qr {
+  display: block;
+  padding: 0;
+  width: 100%;
 }

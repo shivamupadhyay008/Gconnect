@@ -1,38 +1,38 @@
 import { Box, Flex, Avatar, Button } from "@chakra-ui/react";
-export function Suggestions() {
+import { userLogout } from "../login/user.slice";
+import { useSelector, useDispatch } from "react-redux";
+export default function RightCluster() {
+  const userdata = useSelector((state) => state.user.userData);
+const dispatch=useDispatch();
   return (
-    <Box w="100%" h="max-content" p="0.5rem">
-      <Flex justifyContent="center" alignItems="center" w="100%">
-        <Box d="flex" alignItems="center" w="100%">
-          <Avatar size="sm" />
-          <Box fontWeight="bold" fontSize="1.2rem" ml="0.7rem" mr="0.3rem">
-            shivam
-          </Box>
+    <Box h="100vh" className="br-cr" borderRadius="0. 4rem" p="1rem">
+      <Flex
+        direction="column"
+        justifyContent="center"
+        alignItems="center"
+        alignContent="center"
+      >
+        <Avatar src={userdata?.image} name={userdata?.name} />
+        <Box p="10px" fontSize="1.2rem">
+          hii {userdata?.name}😎
         </Box>
-        <Button size="sm" borderRadius="2rem" colorScheme="blue" p="1rem">
-          Follow
+        <Box p="10px" fontSize="1.2rem">
+          <Box fontWeight="bold">{userdata?.followers?.length}</Box>
+          followers
+        </Box>
+        <Box p="10px" fontSize="1.2rem">
+          <Box fontWeight="bold">{userdata?.following?.length}</Box>
+          following
+        </Box>
+        <Button
+          variant="outline"
+          borderRadius="2rem"
+          colorScheme="red"
+          onClick={() => dispatch(userLogout())}
+        >
+          Sign Out
         </Button>
       </Flex>
     </Box>
-  );
-}
-export default function RightCluster() {
-  return (
-    <div>
-      <Box
-        d="flex"
-        flexDir="column"
-        mt="4rem"
-        className="br-cr"
-        borderRadius="1rem"
-      >
-        <Suggestions />
-        <hr />
-        <Suggestions />
-        <hr /> <Suggestions />
-        <hr /> <Suggestions /> <hr />
-        <Suggestions />
-      </Box>
-    </div>
   );
 }

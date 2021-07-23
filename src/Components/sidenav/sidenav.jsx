@@ -1,4 +1,4 @@
-import "./Navbar.css";
+import "./sidenav.css";
 import { BiHome } from "react-icons/bi";
 import { BsCompass } from "react-icons/bs";
 import { GoSearch } from "react-icons/go";
@@ -7,71 +7,78 @@ import { IoMdNotificationsOutline } from "react-icons/io";
 import { RiSettingsLine } from "react-icons/ri";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
-export function Navbar() {
+import { Box } from "@chakra-ui/react";
+export function SideNav() {
   const username = useSelector((state) => state.user.userData.username);
   return (
-    <section className="nav-sec br-cr mobile-nav">
-      <div className="nav-bar-div">
-        <div className={"nav-bar"}>
+    <section className="sidenav-sec br-cr">
+      <div className="">
+        <div className="sidenav-div">
           <NavLink
             to="/"
-            className="nav-div-icon"
-            activeClassName="icon-active"
+            className="sd-nv-icon"
+            activeClassName="sd-active"
             end
           >
             <button>
               <BiHome />
             </button>
+            <Box w="70%"> HOME</Box>
           </NavLink>
           <NavLink
-            className="nav-div-icon"
-            activeClassName="icon-active"
+            className="sd-nv-icon"
+            activeClassName="sd-active"
             to="/connection"
             end
           >
             <button>
               <RiGroupLine />
             </button>
+            <Box w="70%">CONNECT</Box>
           </NavLink>
           <NavLink
-            className="nav-div-icon"
-            activeClassName="icon-active"
-            to="search"
+            className="sd-nv-icon"
+            activeClassName="sd-active"
+            to="/search"
             end
           >
             <button>
-              <GoSearch size="1.3rem" />
+              <GoSearch />
             </button>
+            <Box w="70%">SEARCH</Box>
           </NavLink>
           <NavLink
-            className="nav-div-icon"
-            activeClassName="icon-active"
+            className="sd-nv-icon"
+            activeClassName="sd-active"
             to="notification"
             end
           >
             <button>
               <IoMdNotificationsOutline size="1.6rem" />
             </button>
+            <Box w="70%">NOTIFICATIONS</Box>
           </NavLink>
           <NavLink
-            className="nav-div-icon"
-            activeClassName="icon-active"
+            className="sd-nv-icon"
+            activeClassName="sd-active"
             to="/explore"
             end
           >
             <button>
               <BsCompass />
             </button>
+            <Box w="70%"> EXPLORE</Box>
           </NavLink>
           <NavLink
-            className="nav-div-icon"
-            activeClassName="icon-active"
+            className="sd-nv-icon"
+            activeClassName="sd-active"
             to={`/user/${username}`}
             end
           >
             <button>
               <RiSettingsLine />
             </button>
+            <Box w="70%">PROFILE</Box>
           </NavLink>
         </div>
       </div>

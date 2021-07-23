@@ -7,3 +7,6 @@ export { ProfilePage } from "./profilepage/profilepage";
 export { Login } from "./login/login";
 export { Feed } from "./feed/feed";
 export { Notification } from "./notification/notification";
+export { SideNav } from "./sidenav/sidenav";
+export { Search } from "./search/search";
+export { Explore } from "./explore/explore";

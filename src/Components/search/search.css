@@ -1,0 +1,17 @@
+.search-div {
+  padding: 0.5rem;
+  display: flex;
+  align-content: center;
+  justify-content: space-evenly;
+}
+
+.activity-input {
+  font-size: 23px;
+  padding-left: 0.5rem;
+  border: 2px solid var(--BRAND_BLUE);
+  border-radius: 0.5rem;
+  display: inline;
+  height: 40px;
+  background-color: inherit;
+  width: 100%;
+}

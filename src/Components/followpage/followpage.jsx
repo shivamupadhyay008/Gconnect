@@ -57,10 +57,11 @@ export function Followpage() {
           userData.map((item) => (
             <ConnectProfile
               key={item._id}
+              id={item._id}
               name={item.name}
-              userImage={item.userImage}
+              userImage={item.image}
               username={item.username}
-              about={""}
+              about={item.about}
             />
           ))
         )}

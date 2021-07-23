@@ -1,14 +1,22 @@
+.App {
+  position: relative;
+  height: 100vh;
+}
 .app-grd {
+  height: 100vh;
   display: grid;
-
+  overflow: scroll;
   grid-template-columns: 1fr 2fr 1fr;
 }
 
+
 @media only screen and (max-width: 600px) {
-  .app-grd{
+  .app-grd {
     display: inline;
+    overflow: scroll;
   }
-  .app-grd .chl-fs,.chl-thr {
+  .app-grd .chl-fs,
+  .chl-thr {
     display: none;
   }
 }

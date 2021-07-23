@@ -1,0 +1,29 @@
+.sidenav-sec {
+  height: 100vh;
+  max-height: 100vh;
+  padding-top: 5rem;
+}
+.sidenav-div {
+
+  display: flex;
+  gap: 20px;
+  padding: 1rem;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.sd-nv-icon {
+  color: rgba(0, 0, 0, 0.801);
+  font-weight: bold;
+  gap: 10px;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 0.5rem;
+  font-size: 16px;
+}
+.sd-active {
+  color: white;
+  background-color: var(--BRAND_BLUE);
+}

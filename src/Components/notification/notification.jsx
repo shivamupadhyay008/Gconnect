@@ -1,17 +1,19 @@
-import { Box,Avatar,Flex,Heading } from "@chakra-ui/react";
+import { Box, Avatar, Flex, Heading } from "@chakra-ui/react";
 import { HiArrowNarrowLeft } from "react-icons/hi";
 import { Link } from "react-router-dom";
 import { usersdata } from "../../data";
-const userData =usersdata;
-export function NotificationTread({image,message}){
-    return(
-        <Box className="br-cr" p="0.5rem">
-            <Flex alignContent="center" alignItems="center">
-                <Avatar src={image} size="sm"/>
-                <Box ml="0.3rem" fontSize="0.9rem" fontWeight="bold">{message}</Box>
-            </Flex>
+const userData = usersdata;
+export function NotificationTread({ image, message }) {
+  return (
+    <Box className="br-cr" p="0.5rem">
+      <Flex alignContent="center" alignItems="center">
+        <Avatar src={image} size="sm" />
+        <Box ml="0.3rem" fontSize="0.9rem" fontWeight="bold">
+          {message}
         </Box>
-    )
+      </Flex>
+    </Box>
+  );
 }
 export function Notification() {
   return (
@@ -42,9 +44,15 @@ export function Notification() {
         <span className="con-title">Notification</span>
       </Box>
       <Box>
-        {userData ?(userData.map((item) => (
-          <NotificationTread image={item.userImage} message={item.about}/>
-        ))):(<Heading w="100%" textAlign="center" p="1rem" size="md">Nothing in Notification</Heading>)}
+        {userData ? (
+          userData.map((item) => (
+            <NotificationTread image={item.userImage} message={item.about} />
+          ))
+        ) : (
+          <Heading w="100%" textAlign="center" p="1rem" size="md">
+            Nothing in Notification
+          </Heading>
+        )}
       </Box>
     </Box>
   );

@@ -1,17 +1,151 @@
 import "./profile.css";
 import { Post } from "../index";
-import { Box, Flex, Avatar, Spinner, Button } from "@chakra-ui/react";
+import { updateUsers,userLogout } from "../login/user.slice";
 import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { addFollowing } from "../login/user.slice";
-import { getUserApi, userFollow, userUnfollow } from "../../apis/apis";
 import { useParams } from "react-router-dom";
+import { HiArrowNarrowLeft } from "react-icons/hi";
+import { FaPowerOff } from "react-icons/fa";
+import { addFollowing } from "../login/user.slice";
+import { useSelector, useDispatch } from "react-redux";
+import { FaTimes } from "react-icons/fa";
+import {
+  Box,
+  Flex,
+  Avatar,
+  Spinner,
+  Button,
+  Textarea,
+  useMediaQuery,
+} from "@chakra-ui/react";
+import { getUserApi, userFollow, userUnfollow } from "../../apis/apis";
+import axios from "axios";
+function EditProfile({ setOpenEdit }) {
+  const [status, setStatus] = useState({ state: "idle" });
+  const [about, setAbout] = useState(null);
+  const [selectupload, setSelect] = useState(null);
+  const dispatch = useDispatch();
+  console.log(about && !selectupload ? true : false);
+  const userdata = useSelector((state) => state.user.userData);
+  async function updateUser() {
+    try {
+      setStatus({ state: "loading" });
+      let imageresponse = null;
+      if (selectupload) {
+        const imageData = new FormData();
+        imageData.append("file", selectupload);
+        imageData.append("upload_preset", "gconnect");
+        imageData.append("cloud_name", "shivam08");
+        imageresponse = await axios.post(
+          "https://api.cloudinary.com/v1_1/shivam08/image/upload",
+          imageData
+        );
+      }
+      const res = await axios.post(
+        "https://gConnect-backend.shivam008.repl.co/user/update",
+        { userid: userdata._id, image: imageresponse?.data?.url, about }
+      );
+      console.log(res.data.data);
+      setStatus({ state: "fulfilled" });
+      dispatch(updateUsers(res.data.data));
+    } catch (error) {
+      setStatus({ state: "error" });
+      console.log(error.message);
+    }
+  }
+  return (
+    <Box
+      pos="absolute"
+      borderRadius="0.5rem"
+      left="25%"
+      w="70%"
+      h="50vh"
+      bg="white"
+      border="1px solid black"
+      zIndex="2"
+      opacity="100%"
+    >
+      <Flex justifyContent="space-between">
+        <Box
+          w="90%"
+          padding="0.5rem"
+          fontSize="1.2rem"
+          fontWeight="bold"
+          textAlign="center"
+        >
+          Edit
+        </Box>
+        <Button
+          borderRadius="50%"
+          colorScheme="blue"
+          p="0"
+          variant="outline"
+          onClick={() => setOpenEdit(false)}
+        >
+          <FaTimes />
+        </Button>
+      </Flex>
+      <Box>
+        <Flex
+          direction="column"
+          justifyItems="center"
+          justifyContent="space-around"
+        >
+          <Box ml="1rem" mb="1rem" mt="1rem">
+            <label htmlFor="icon-button-file" style={{ cursor: "pointer" }}>
+              <input
+                id="icon-button-file"
+                type="file"
+                accept="image/*"
+                onChange={(e) => setSelect(e.target.files[0])}
+              />
+            </label>
+          </Box>
+          <Textarea
+            mb="1rem"
+            mt="1rem"
+            onChange={(e) => setAbout(e.target.value)}
+            placeholder="Here is a sample placeholder"
+            resize="none"
+          />
+          <Button
+            mt="2rem"
+            isDisabled={about && selectupload ? false : true}
+            borderRadius="2rem"
+            colorScheme="#1da1f2"
+            bg="var(--BRAND_BLUE)"
+            className="pst-btn"
+            variant="solid"
+            onClick={() => updateUser()}
+          >
+            Update
+          </Button>
+          {status.state === "fulfilled" ? (
+            <Box textAlign="center" fontWeight="bold" color="green">
+              updated Successfully
+            </Box>
+          ) : (
+            ""
+          )}
+          {status.state === "error" ? (
+            <Box textAlign="center" fontWeight="bold" color="red">
+              Something went wrong please try again
+            </Box>
+          ) : (
+            ""
+          )}
+        </Flex>
+      </Box>
+    </Box>
+  );
+}
 export function ProfilePage() {
   let { username } = useParams();
   const dispatch = useDispatch();
+  const [openEdit, setOpenEdit] = useState(false);
   const [userData, setUserData] = useState(null);
   const [isFollowing, setIsFollowing] = useState(false);
   const userprofileData = useSelector((state) => state.user);
+  const [mobileWidth] = useMediaQuery("(max-width:600px)");
   useEffect(() => {
     (async () => {
       if (username !== userprofileData.userData.username) {
@@ -19,6 +153,7 @@ export function ProfilePage() {
           userid: userprofileData.userData._id,
           username,
         });
+        console.log(res);
         if (res.status === 200) {
           setUserData(res.data.userdata);
         }
@@ -45,7 +180,6 @@ export function ProfilePage() {
         return { ...state, followers: res.data.followinguser.followers };
       });
     }
-
     setIsFollowing((follow) => true);
   };
 
@@ -63,7 +197,33 @@ export function ProfilePage() {
   return (
     <section>
       {userData ? (
-        <div>
+        <div className="pf-cls">
+          <Box
+            position="relative"
+            padding="0.5rem"
+            border=" 1px solid #e9e9e9"
+            display="flex"
+            width="100%"
+          >
+            <Box
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              width="10%"
+              mr="0.8rem"
+            >
+              <Box
+                cursor="pointer"
+                color="var(--BRAND_BLUE)"
+                _hover={{ background: "var(--LIGHT_BLUE)", color: "white" }}
+                p="0.2rem"
+                borderRadius="50%"
+              >
+                <HiArrowNarrowLeft fontSize="1.4rem" />
+              </Box>
+            </Box>
+            <span className="con-title"> {userData.name.toUpperCase()}</span>
+          </Box>
           <Box className="br-cr">
             <Box
               mt="1rem"
@@ -86,14 +246,37 @@ export function ProfilePage() {
                   <span className="pf-usr">{userData.username}</span>
                 </Box>
                 <Box mr="1rem">
+                  {openEdit ? (
+                    <EditProfile
+                      setUserData={setUserData}
+                      setOpenEdit={setOpenEdit}
+                    />
+                  ) : (
+                    ""
+                  )}
                   {username === userprofileData.userData.username ? (
-                    <Button
-                      borderRadius="2rem"
-                      variant="outline"
-                      colorScheme="blue"
-                    >
-                      Edit Profile
-                    </Button>
+                    <Box display="flex" alignItems="center">
+                      <Button
+                        borderRadius="2rem"
+                        variant="outline"
+                        colorScheme="blue"
+                        onClick={() => setOpenEdit(true)}
+                      >
+                        Edit Profile
+                      </Button>
+                      <Box
+                        ml="0.5rem"
+                        color="red"
+                        borderRadius="1.3rem"
+                        display={mobileWidth ? "block" : "none"}
+                        cursor="pointer"
+                        p="0.4rem"
+                        onClick={() => dispatch(userLogout())}
+                        _hover={{ bg: "#fd4383", color: "black" }}
+                      >
+                        <FaPowerOff fontSize="1.4rem" />
+                      </Box>
+                    </Box>
                   ) : (
                     <Button
                       borderRadius="2rem"

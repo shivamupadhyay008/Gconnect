@@ -81,9 +81,6 @@
     width: 0px;
     height: 0px;
 }
-/* .user-stat-div::-webkit-scrollbar-track-piece  {
-    background-color: #C2D2E4;
-} */
 
 .user-stat-div::-webkit-scrollbar-thumb:vertical {
     background-color: #0A4C95;

@@ -39,6 +39,7 @@ export const userSignup = createAsyncThunk(
       );
       return response.data;
     } catch (error) {
+      console.log("its errro", error);
       return rejectWithValue(error.message);
     }
   }
@@ -50,6 +51,14 @@ export const userSlice = createSlice({
   reducers: {
     addFollowing: (state, action) => {
       state.userData.following = action.payload;
+    },
+    updateUsers: (state, action) => {
+      state.userData.image = action.payload.image;
+      state.userData.about = action.payload.about;
+    },
+    userLogout: (state, action) => {
+      state.userData.isUserLoggedIn=false
+      localStorage.removeItem("G_CONNECT_TOKEN");
     },
   },
   extraReducers: {
@@ -77,7 +86,6 @@ export const userSlice = createSlice({
     },
     [userSignup.fulfilled]: (state, action) => {
       state.status = "fullfilled";
-      state.userData = action.payload.users;
     },
     [userSignup.rejected]: (state, action) => {
       state.status = "error";
@@ -85,5 +93,5 @@ export const userSlice = createSlice({
     },
   },
 });
-export const { addFollowing } = userSlice.actions;
+export const { addFollowing, updateUsers, userLogout } = userSlice.actions;
 export default userSlice.reducer;

@@ -1,4 +1,12 @@
-import { Navbar, Followpage, Feed, ProfilePage, Notification } from "../index";
+import {
+  Navbar,
+  Followpage,
+  Feed,
+  ProfilePage,
+  Explore,
+  Search,
+  Notification,
+} from "../index";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 export function PrivateRoute({ isUserLoggedIn, path, ...props }) {
@@ -35,6 +43,16 @@ export default function MainCluster() {
           isUserLoggedIn={userData.isUserLoggedIn}
           path="/notification"
           element={<Notification />}
+        />
+        <PrivateRoute
+          isUserLoggedIn={userData.isUserLoggedIn}
+          path="/explore"
+          element={<Explore />}
+        />
+        <PrivateRoute
+          isUserLoggedIn={userData.isUserLoggedIn}
+          path="/search"
+          element={<Search />}
         />
       </Routes>
     </div>

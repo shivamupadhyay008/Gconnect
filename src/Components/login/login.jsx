@@ -1,10 +1,10 @@
 import "./login.css";
-import { Box, Input, Heading,Button, FormLabel } from "@chakra-ui/react";
+import { Box, Input, Heading, Button, FormLabel ,useMediaQuery} from "@chakra-ui/react";
 import { useSelector, useDispatch } from "react-redux";
-import { userLogin,userSignup } from "./user.slice";
-import {  useState } from "react";
+import { userLogin, userSignup } from "./user.slice";
+import { useState } from "react";
 import { useNavigate } from "react-router";
-export function InputComp({ type, placeHolder, text, setText, isValid }) {
+export function InputComp({ type, placeHolder, text, setText, isValid, err }) {
   return (
     <Box m="1rem 0" w="100%" textAlign="left">
       <FormLabel>{type}</FormLabel>
@@ -15,6 +15,9 @@ export function InputComp({ type, placeHolder, text, setText, isValid }) {
         placeholder={placeHolder}
         onChange={(e) => setText(e.target.value)}
       />
+      <span className={`frm-err ${err?.error ? "sh-dis" : ""}`}>
+        {err?.message}
+      </span>
     </Box>
   );
 }
@@ -28,10 +31,12 @@ export function Login() {
   const [signup, setSignup] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+   const [mobileWidth] = useMediaQuery("(max-width: 600px)");
   if (userData.userData.isUserLoggedIn) navigate("/");
+  console.log(userData.error)
   return (
     <section className="login-bx">
-      <Box className="login-div" padding="0 1rem">
+      <Box padding="0 1rem" className={`login-div ${mobileWidth? 'login-dv-qr':""}`}>
         <Heading as="h4" mt="1rem">
           Gconnect
         </Heading>
@@ -70,13 +75,32 @@ export function Login() {
             setText={setUserPassword}
           />
         </Box>
+        {userData.status === "error" ? (
+          <Box mb="0.3rem" fontSize="0.9rem" color="red">
+            {!signup
+              ? " Email or Password incorrect"
+              : "Something went wrong try again after sometime"}
+          </Box>
+        ) : (
+          ""
+        )}
+        {userData.status === "fullfilled" ? (
+          <Box mb="0.3rem" fontSize="0.9rem" color="green">
+            {!signup ? " Login Success" : "Signup Success"}
+          </Box>
+        ) : (
+          ""
+        )}
+        <Box mb="0.3rem" fontSize="0.9rem"></Box>
         <Button
           isLoading={userData.status === "loading" ? true : false}
           loadingText={!signup ? "Logging in" : "Signin up"}
           onClick={() => {
             !signup
               ? dispatch(userLogin({ email, password: userPassword }))
-              : dispatch(userSignup({ name, email, username, password:userPassword }));
+              : dispatch(
+                  userSignup({ name, email, username, password: userPassword })
+                );
           }}
           borderRadius="2rem"
         >
