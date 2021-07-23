@@ -50,17 +50,6 @@ export function SideNav() {
           <NavLink
             className="sd-nv-icon"
             activeClassName="sd-active"
-            to="notification"
-            end
-          >
-            <button>
-              <IoMdNotificationsOutline size="1.6rem" />
-            </button>
-            <Box w="70%">NOTIFICATIONS</Box>
-          </NavLink>
-          <NavLink
-            className="sd-nv-icon"
-            activeClassName="sd-active"
             to="/explore"
             end
           >

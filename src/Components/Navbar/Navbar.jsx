@@ -46,16 +46,6 @@ export function Navbar() {
           <NavLink
             className="nav-div-icon"
             activeClassName="icon-active"
-            to="notification"
-            end
-          >
-            <button>
-              <IoMdNotificationsOutline size="1.6rem" />
-            </button>
-          </NavLink>
-          <NavLink
-            className="nav-div-icon"
-            activeClassName="icon-active"
             to="/explore"
             end
           >
