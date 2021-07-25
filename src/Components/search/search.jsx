@@ -1,8 +1,6 @@
 import { Box, Spinner } from "@chakra-ui/react";
 import { HiArrowNarrowLeft } from "react-icons/hi";
-import { AiOutlineSearch } from "react-icons/ai";
 import { ConnectProfile } from "../index";
-import { Link } from "react-router-dom";
 import "./search.css";
 import { useCallback, useState } from "react";
 import axios from "axios";

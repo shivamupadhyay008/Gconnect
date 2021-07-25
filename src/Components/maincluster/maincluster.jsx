@@ -4,8 +4,7 @@ import {
   Feed,
   ProfilePage,
   Explore,
-  Search,
-  Notification,
+  Search
 } from "../index";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -38,11 +37,6 @@ export default function MainCluster() {
           isUserLoggedIn={userData.isUserLoggedIn}
           path="/user/:username"
           element={<ProfilePage />}
-        />
-        <PrivateRoute
-          isUserLoggedIn={userData.isUserLoggedIn}
-          path="/notification"
-          element={<Notification />}
         />
         <PrivateRoute
           isUserLoggedIn={userData.isUserLoggedIn}

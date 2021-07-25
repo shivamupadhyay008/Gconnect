@@ -39,6 +39,7 @@ export function Feed() {
           return (
             <Post
               key={item._id}
+              from="feed"
               id={item._id}
               userimage={item.postedBy.image}
               userId={item.postedBy.username}

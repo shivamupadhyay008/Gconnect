@@ -3,7 +3,6 @@ import { BiHome } from "react-icons/bi";
 import { BsCompass } from "react-icons/bs";
 import { GoSearch } from "react-icons/go";
 import { RiGroupLine } from "react-icons/ri";
-import { IoMdNotificationsOutline } from "react-icons/io";
 import { RiSettingsLine } from "react-icons/ri";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";

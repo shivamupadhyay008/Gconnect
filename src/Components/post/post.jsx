@@ -13,7 +13,7 @@ import {
   VStack,
   Avatar,
 } from "@chakra-ui/react";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { AiOutlineHeart, AiTwotoneHeart } from "react-icons/ai";
 import { useEffect, useState } from "react";
 import {
@@ -82,6 +82,7 @@ export function CommentSection({ comments, postid }) {
 export function Post({
   id,
   userimage,
+  from,
   userId,
   postbody,
   postimg,
@@ -187,7 +188,11 @@ export function Post({
             <Box mt="0.1rem">{likes.length} likes</Box>
           </Flex>
         </Box>
-        {showComments ? <CommentSection comments={comments} postid={id} /> : ""}
+        {showComments && from == "feed" ? (
+          <CommentSection comments={comments} postid={id} />
+        ) : (
+          ""
+        )}
       </Box>
     </section>
   );

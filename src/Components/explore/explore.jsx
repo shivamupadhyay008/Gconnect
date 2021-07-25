@@ -1,10 +1,9 @@
 import { HiArrowNarrowLeft } from "react-icons/hi";
-import { fetchPosts ,fetchExplorePosts} from "../post/posts.slice";
+import { fetchExplorePosts } from "../post/posts.slice";
 import { Post } from "../index";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { Spinner, Box } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
 export function Explore() {
   const posts = useSelector((state) => state.posts.explorePosts);
   const postStatus = useSelector((state) => state.posts.status);
@@ -43,6 +42,7 @@ export function Explore() {
         posts?.map((item) => {
           return (
             <Post
+              from={"explore"}
               key={item._id}
               id={item._id}
               userimage={item.postedBy.image}

@@ -1,7 +1,5 @@
 import axios from "axios";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { useSelector } from "react-redux";
-
 const initialState = { usersList: [], status: "idle", error: null };
 const gcUrl = "https://gConnect-backend.shivam008.repl.co";
 

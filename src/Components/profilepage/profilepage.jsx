@@ -19,12 +19,12 @@ import {
 } from "@chakra-ui/react";
 import { getUserApi, userFollow, userUnfollow } from "../../apis/apis";
 import axios from "axios";
-function EditProfile({ setOpenEdit }) {
+
+function EditProfile({ setOpenEdit, setUserData }) {
   const [status, setStatus] = useState({ state: "idle" });
   const [about, setAbout] = useState(null);
   const [selectupload, setSelect] = useState(null);
   const dispatch = useDispatch();
-  console.log(about && !selectupload ? true : false);
   const userdata = useSelector((state) => state.user.userData);
   async function updateUser() {
     try {
@@ -44,9 +44,9 @@ function EditProfile({ setOpenEdit }) {
         "https://gConnect-backend.shivam008.repl.co/user/update",
         { userid: userdata._id, image: imageresponse?.data?.url, about }
       );
-      console.log(res.data.data);
       setStatus({ state: "fulfilled" });
       dispatch(updateUsers(res.data.data));
+      setUserData((state)=>({...state,image:res.data.data.image,about:res.data.data.about}));
     } catch (error) {
       setStatus({ state: "error" });
       console.log(error.message);
@@ -113,6 +113,7 @@ function EditProfile({ setOpenEdit }) {
             borderRadius="2rem"
             colorScheme="#1da1f2"
             bg="var(--BRAND_BLUE)"
+            isLoading={status.state === "loading"?true:false}
             className="pst-btn"
             variant="solid"
             onClick={() => updateUser()}
@@ -153,7 +154,6 @@ export function ProfilePage() {
           userid: userprofileData.userData._id,
           username,
         });
-        console.log(res);
         if (res.status === 200) {
           setUserData(res.data.userdata);
         }
@@ -161,7 +161,7 @@ export function ProfilePage() {
         setUserData(userprofileData.userData);
       }
     })();
-  }, [username]);
+  }, [ username ]);
   useEffect(() => {
     if (
       userprofileData.userData.following.some(
@@ -334,7 +334,7 @@ export function ProfilePage() {
                   postimg={item.image}
                   userName={item.postedBy.name}
                   comments={item.comments}
-                  userimage={item.postedBy.image}
+                  userimage={userData.image}
                 />
               ))
             ) : (
