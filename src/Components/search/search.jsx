@@ -2,13 +2,15 @@ import { Box, Spinner } from "@chakra-ui/react";
 import { HiArrowNarrowLeft } from "react-icons/hi";
 import { ConnectProfile } from "../index";
 import "./search.css";
-import { useCallback, useState } from "react";
+import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export function Search() {
   const [userData, setUserData] = useState([]);
   const [status, setStatus] = useState({ state: "idle" });
-
+  const { state } = useLocation();
+  const navigate = useNavigate();
   async function getResult(e) {
     try {
       setStatus({ state: "loading" });
@@ -16,7 +18,7 @@ export function Search() {
         `https://gconnect-backend.shivam008.repl.co/user/getuser/${e.target.value}`
       );
       console.log(result.data);
-      if(result.data.users.length>0)setUserData(result.data.users)
+      if (result.data.users.length > 0) setUserData(result.data.users);
       setStatus({ state: "fulfilled" });
     } catch (err) {
       console.log(err.message);
@@ -28,15 +30,14 @@ export function Search() {
     let timer;
     return function (...args) {
       if (timer) clearTimeout(timer);
-      const context=this;
-      timer= setTimeout(()=>{
-        timer=null;
-        fun.apply(context,args)
-      },500)
-
+      const context = this;
+      timer = setTimeout(() => {
+        timer = null;
+        fun.apply(context, args);
+      }, 500);
     };
   }
-  const optimisedFunction = useCallback(debounceFunctin(getResult))
+  const optimisedFunction = debounceFunctin(getResult);
 
   return (
     <div>
@@ -52,6 +53,9 @@ export function Search() {
           alignItems="center"
           width="10%"
           mr="0.8rem"
+          onClick={() => {
+            navigate(state?.from);
+          }}
         >
           <Box
             cursor="pointer"

@@ -1,17 +1,19 @@
 import "./followpage.css";
-import { Box,Spinner } from "@chakra-ui/react";
+import { Box, Spinner } from "@chakra-ui/react";
 import { ConnectProfile } from "../index";
 import { HiArrowNarrowLeft } from "react-icons/hi";
 import { fetchUsers } from "./followList.slice";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
+import { useLocation, useNavigate } from "react-router-dom";
 
 export function Followpage() {
   const dispatch = useDispatch();
+  const { state } = useLocation();
+  const navigate = useNavigate();
   const status = useSelector((state) => state.usersArray.status);
   const userData = useSelector((state) => state.usersArray.usersList);
-  const user= useSelector((state) => state.user.userData);
+  const user = useSelector((state) => state.user.userData);
   const error = useSelector((state) => state.usersArray.error);
   console.log("status ye hai", status, error);
   useEffect(() => {
@@ -20,7 +22,7 @@ export function Followpage() {
       console.log("idle");
       dispatch(fetchUsers(user._id));
     }
-  },[]);
+  }, []);
   return (
     <Box>
       <Box
@@ -35,6 +37,9 @@ export function Followpage() {
           alignItems="center"
           width="10%"
           mr="0.8rem"
+          onClick={() => {
+            navigate(state?.from);
+          }}
         >
           <Box
             cursor="pointer"

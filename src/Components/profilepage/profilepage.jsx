@@ -1,8 +1,8 @@
 import "./profile.css";
 import { Post } from "../index";
-import { updateUsers,userLogout } from "../login/user.slice";
+import { updateUsers, userLogout } from "../login/user.slice";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { HiArrowNarrowLeft } from "react-icons/hi";
 import { FaPowerOff } from "react-icons/fa";
 import { addFollowing } from "../login/user.slice";
@@ -46,7 +46,11 @@ function EditProfile({ setOpenEdit, setUserData }) {
       );
       setStatus({ state: "fulfilled" });
       dispatch(updateUsers(res.data.data));
-      setUserData((state)=>({...state,image:res.data.data.image,about:res.data.data.about}));
+      setUserData((state) => ({
+        ...state,
+        image: res.data.data.image,
+        about: res.data.data.about,
+      }));
     } catch (error) {
       setStatus({ state: "error" });
       console.log(error.message);
@@ -113,7 +117,7 @@ function EditProfile({ setOpenEdit, setUserData }) {
             borderRadius="2rem"
             colorScheme="#1da1f2"
             bg="var(--BRAND_BLUE)"
-            isLoading={status.state === "loading"?true:false}
+            isLoading={status.state === "loading" ? true : false}
             className="pst-btn"
             variant="solid"
             onClick={() => updateUser()}
@@ -142,6 +146,8 @@ function EditProfile({ setOpenEdit, setUserData }) {
 export function ProfilePage() {
   let { username } = useParams();
   const dispatch = useDispatch();
+  const { state } = useLocation();
+  const navigate = useNavigate();
   const [openEdit, setOpenEdit] = useState(false);
   const [userData, setUserData] = useState(null);
   const [isFollowing, setIsFollowing] = useState(false);
@@ -161,7 +167,7 @@ export function ProfilePage() {
         setUserData(userprofileData.userData);
       }
     })();
-  }, [ username ]);
+  }, [username]);
   useEffect(() => {
     if (
       userprofileData.userData.following.some(
@@ -210,6 +216,7 @@ export function ProfilePage() {
               justifyContent="center"
               alignItems="center"
               width="10%"
+              onClick={()=>navigate(state?.from)}
               mr="0.8rem"
             >
               <Box
@@ -327,6 +334,7 @@ export function ProfilePage() {
             {userData && userData.posts && userData.posts.length !== 0 ? (
               userData.posts.map((item) => (
                 <Post
+                  from="explore"
                   key={item.postedBy.image}
                   postbody={item.body}
                   id={item._id}

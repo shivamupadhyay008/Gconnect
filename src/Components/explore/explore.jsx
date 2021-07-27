@@ -3,11 +3,14 @@ import { fetchExplorePosts } from "../post/posts.slice";
 import { Post } from "../index";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Spinner, Box } from "@chakra-ui/react";
 export function Explore() {
   const posts = useSelector((state) => state.posts.explorePosts);
   const postStatus = useSelector((state) => state.posts.status);
   const dispatch = useDispatch();
+  const { state } = useLocation();
+  const navigate = useNavigate();
   useEffect(() => {
     if (postStatus === "idle") dispatch(fetchExplorePosts());
   }, []);
@@ -25,6 +28,7 @@ export function Explore() {
           alignItems="center"
           width="10%"
           mr="0.8rem"
+          onClick={() => navigate(state?.from)}
         >
           <Box
             cursor="pointer"

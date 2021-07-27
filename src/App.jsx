@@ -18,10 +18,7 @@ export default function App() {
     <Provider store={store}>
       <ChakraProvider>
         <div className="App">
-          <Router>
-            <Routes>
-              <Route path="/login" element={<Login />} />
-            </Routes>
+
             <div className="app-grd">
               <div className="chl-fs">
                 <SideNav />
@@ -33,7 +30,7 @@ export default function App() {
                 <RightCluster />
               </div>
             </div>
-          </Router>
+
         </div>
       </ChakraProvider>
     </Provider>

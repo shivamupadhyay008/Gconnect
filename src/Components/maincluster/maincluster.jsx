@@ -4,9 +4,15 @@ import {
   Feed,
   ProfilePage,
   Explore,
-  Search
+  Login,
+  Search,
 } from "../index";
-import { Routes, Route, Navigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import { useSelector } from "react-redux";
 export function PrivateRoute({ isUserLoggedIn, path, ...props }) {
   return isUserLoggedIn ? (
@@ -22,7 +28,10 @@ export default function MainCluster() {
   return (
     <div>
       <Navbar />
+
       <Routes>
+        <Route path="/login" element={<Login />} />
+
         <PrivateRoute
           isUserLoggedIn={userData.isUserLoggedIn}
           path="/"

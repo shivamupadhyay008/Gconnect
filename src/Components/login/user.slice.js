@@ -6,6 +6,9 @@ const initialState = {
     isUserLoggedIn: false,
   },
   status: "idle",
+  loginStatus: "idle",
+  signupStatus: "idle",
+  loginError: null,
   error: null,
 };
 
@@ -22,10 +25,9 @@ export const userLogin = createAsyncThunk(
           },
         }
       );
-
       return response.data;
     } catch (error) {
-      return rejectWithValue(error.message);
+      return rejectWithValue(error.response.data);
     }
   }
 );
@@ -57,21 +59,21 @@ export const userSlice = createSlice({
       state.userData.about = action.payload.about;
     },
     userLogout: (state, action) => {
-      state.userData.isUserLoggedIn=false
+      state.userData.isUserLoggedIn = false;
       localStorage.removeItem("G_CONNECT_TOKEN");
     },
   },
   extraReducers: {
     [userLogin.pending]: (state) => {
       state.status = "loading";
+      state.loginStatus = "loading";
     },
     [userLogin.fulfilled]: (state, action) => {
-      state.status = "fullfilled";
+      state.status = "fulfilled";
+      state.loginStatus = "fulfilled";
       state.userData.isUserLoggedIn = true;
-
       state.userData = { ...state.userData, ...action.payload.user };
       const token = localStorage.getItem("G_CONNECT_TOKEN");
-
       if (!token) {
         localStorage.setItem("G_CONNECT_TOKEN", action.payload.token);
       }
@@ -79,16 +81,17 @@ export const userSlice = createSlice({
     [userLogin.rejected]: (state, action) => {
       state.status = "error";
       localStorage.removeItem("G_CONNECT_TOKEN");
-      state.error = action.error.message;
+      state.error = action.payload.message;
+      state.loginError = "error";
     },
     [userSignup.pending]: (state, action) => {
-      state.status = "loading";
+      state.signupStatus = "loading";
     },
     [userSignup.fulfilled]: (state, action) => {
-      state.status = "fullfilled";
+      state.signupStatus = "fullfilled";
     },
     [userSignup.rejected]: (state, action) => {
-      state.status = "error";
+      state.signupStatus = "error";
       state.error = action.error.message;
     },
   },

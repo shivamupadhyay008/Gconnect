@@ -143,55 +143,61 @@ export function Post({
             ""
           )}
         </div>
-        <Box display="flex" mt="0.5rem">
-          <Flex
-            display="inline-flex"
-            justifyContent="center"
-            mr="0.5rem"
-            onClick={() => setShowComments((state) => !state)}
-          >
-            <Icon boxSize="2rem" _hover={{ cursor: "pointer" }}>
-              <BiMessageSquare color="#000000ab" />
-            </Icon>
-            <Box mt="0.1rem"> {comments.length} comments</Box>
-          </Flex>
-          <Flex display="inline-flex" justifyContent="center">
-            <Box
-              onClick={async () => {
-                let res = null;
-                if (liked) {
-                  res = await unlikePostApi({
-                    postid: id,
-                    userid: userData.userData._id,
-                  });
-                } else {
-                  res = await likePostApi({
-                    postid: id,
-                    userid: userData.userData._id,
-                  });
-                }
-                if (res.status === 200) {
-                  console.log("working");
-                  dispatch(likePostReducer(res.data));
-                }
-                setLiked((like) => !like);
-              }}
-            >
-              <Icon boxSize="2rem" _hover={{ cursor: "pointer" }}>
-                {liked ? (
-                  <AiTwotoneHeart color="red" />
-                ) : (
-                  <AiOutlineHeart color="#000000ab" />
-                )}
-              </Icon>
+        {from !== "explore" ? (
+          <Box>
+            <Box display="flex" mt="0.5rem">
+              <Flex
+                display="inline-flex"
+                justifyContent="center"
+                mr="0.5rem"
+                onClick={() => setShowComments((state) => !state)}
+              >
+                <Icon boxSize="2rem" _hover={{ cursor: "pointer" }}>
+                  <BiMessageSquare color="#000000ab" />
+                </Icon>
+                <Box mt="0.1rem"> {comments.length} comments</Box>
+              </Flex>
+              <Flex display="inline-flex" justifyContent="center">
+                <Box
+                  onClick={async () => {
+                    let res = null;
+                    if (liked) {
+                      res = await unlikePostApi({
+                        postid: id,
+                        userid: userData.userData._id,
+                      });
+                    } else {
+                      res = await likePostApi({
+                        postid: id,
+                        userid: userData.userData._id,
+                      });
+                    }
+                    if (res.status === 200) {
+                      console.log("working");
+                      dispatch(likePostReducer(res.data));
+                    }
+                    setLiked((like) => !like);
+                  }}
+                >
+                  <Icon boxSize="2rem" _hover={{ cursor: "pointer" }}>
+                    {liked ? (
+                      <AiTwotoneHeart color="red" />
+                    ) : (
+                      <AiOutlineHeart color="#000000ab" />
+                    )}
+                  </Icon>
+                </Box>
+                <Box mt="0.1rem">{likes.length} likes</Box>
+              </Flex>
             </Box>
-            <Box mt="0.1rem">{likes.length} likes</Box>
-          </Flex>
-        </Box>
-        {showComments && from == "feed" ? (
-          <CommentSection comments={comments} postid={id} />
+            {showComments ? (
+              <CommentSection comments={comments} postid={id} />
+            ) : (
+              ""
+            )}
+          </Box>
         ) : (
-          ""
+          <></>
         )}
       </Box>
     </section>

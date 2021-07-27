@@ -1,5 +1,12 @@
 import "./login.css";
-import { Box, Input, Heading, Button, FormLabel ,useMediaQuery} from "@chakra-ui/react";
+import {
+  Box,
+  Input,
+  Heading,
+  Button,
+  FormLabel,
+  useMediaQuery,
+} from "@chakra-ui/react";
 import { useSelector, useDispatch } from "react-redux";
 import { userLogin, userSignup } from "./user.slice";
 import { useState } from "react";
@@ -21,7 +28,6 @@ export function InputComp({ type, placeHolder, text, setText, isValid, err }) {
     </Box>
   );
 }
-
 export function Login() {
   const userData = useSelector((state) => state.user);
   const [name, setName] = useState("");
@@ -31,12 +37,15 @@ export function Login() {
   const [signup, setSignup] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-   const [mobileWidth] = useMediaQuery("(max-width: 600px)");
+  const [mobileWidth] = useMediaQuery("(max-width: 600px)");
   if (userData.userData.isUserLoggedIn) navigate("/");
-  console.log(userData.error)
+  console.log(userData.loginError,userData.error)
   return (
     <section className="login-bx">
-      <Box padding="0 1rem" className={`login-div ${mobileWidth? 'login-dv-qr':""}`}>
+      <Box
+        padding="0 1rem"
+        className={`login-div ${mobileWidth ? "login-dv-qr" : ""}`}
+      >
         <Heading as="h4" mt="1rem">
           Gconnect
         </Heading>
@@ -75,11 +84,16 @@ export function Login() {
             setText={setUserPassword}
           />
         </Box>
-        {userData.status === "error" ? (
+        {userData.loginError === "error" ? (
           <Box mb="0.3rem" fontSize="0.9rem" color="red">
-            {!signup
-              ? " Email or Password incorrect"
-              : "Something went wrong try again after sometime"}
+            {!signup ? userData.error : ""}
+          </Box>
+        ) : (
+          ""
+        )}
+        {userData.singupError === "error" ? (
+          <Box mb="0.3rem" fontSize="0.9rem" color="red">
+            {!signup ? userData.error : ""}
           </Box>
         ) : (
           ""
@@ -115,6 +129,17 @@ export function Login() {
             cursor="pointer"
           >
             {signup ? "Login" : "Signup"}
+          </Box>
+           or login as
+          <Box
+            onClick={() =>
+              dispatch(userLogin({ email:"user12@gmail.com", password:"user1234"}))
+            }
+            d="inline"
+            color="var(--BRAND_BLUE)"
+            cursor="pointer"
+          >
+            guest
           </Box>
         </Box>
       </Box>
