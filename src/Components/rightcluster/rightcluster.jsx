@@ -5,7 +5,7 @@ export default function RightCluster() {
   const userdata = useSelector((state) => state.user.userData);
 const dispatch=useDispatch();
   return (
-    <Box h="100vh" className="br-cr" borderRadius="0. 4rem" p="1rem">
+    <Box h="97.7vh" className="br-cr" borderRadius="0. 4rem" p="1rem" pt="4rem">
       <Flex
         direction="column"
         justifyContent="center"

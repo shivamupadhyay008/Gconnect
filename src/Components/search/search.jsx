@@ -22,6 +22,7 @@ export function Search() {
       setStatus({ state: "fulfilled" });
     } catch (err) {
       console.log(err.message);
+      setStatus({ state: "error" });
       return err.message;
     }
   }

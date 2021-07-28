@@ -13,7 +13,7 @@ import {
   VStack,
   Avatar,
 } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { AiOutlineHeart, AiTwotoneHeart } from "react-icons/ai";
 import { useEffect, useState } from "react";
 import {
@@ -95,12 +95,12 @@ export function Post({
   const [showComments, setShowComments] = useState(false);
   const userData = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const { pathname } = useLocation();
   useEffect(() => {
     if (likes.some((item) => item === userData.userData._id)) {
       setLiked(true);
     }
   }, []);
-
   return (
     <section className="post-sec">
       <div className="post-pic">
@@ -114,7 +114,7 @@ export function Post({
       <Box pr="0.5rem">
         <div className="post-body">
           <div className="title-head">
-            <Link to={`/user/${userId}`}>
+            <Link state={{ from: pathname }} to={`/user/${userId}`}>
               <Flex alignItems="center">
                 <Box fontWeight="bold">{userName}</Box>
                 <Box fontSize="0.9rem" className="uid-tm">
@@ -122,9 +122,6 @@ export function Post({
                 </Box>
               </Flex>
             </Link>
-            <div className="elips-cls" onClick={() => openOption(true)}>
-              <IoEllipsisHorizontalOutline />
-            </div>
           </div>
         </div>
         <div onClick={() => openOption(false)}>

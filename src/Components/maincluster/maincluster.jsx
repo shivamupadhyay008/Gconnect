@@ -26,12 +26,9 @@ export default function MainCluster() {
   const userData = useSelector((state) => state.user.userData);
 
   return (
-    <div>
+    <div className="main-clus">
       <Navbar />
-
       <Routes>
-        <Route path="/login" element={<Login />} />
-
         <PrivateRoute
           isUserLoggedIn={userData.isUserLoggedIn}
           path="/"

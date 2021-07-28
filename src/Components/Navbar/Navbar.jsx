@@ -17,6 +17,7 @@ export function Navbar() {
             to="/"
             className="nav-div-icon"
             activeClassName="icon-active"
+            state={{ from: pathname }}
             end
           >
             <button>
