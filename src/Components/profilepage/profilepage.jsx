@@ -59,86 +59,96 @@ function EditProfile({ setOpenEdit, setUserData }) {
   return (
     <Box
       pos="absolute"
-      borderRadius="0.5rem"
-      left="25%"
-      w="70%"
-      h="50vh"
-      bg="white"
-      border="1px solid black"
-      zIndex="2"
-      opacity="100%"
+      zIndex="3"
+      left="0"
+      top="0"
+      h="100vh"
+      className="ed-modal"
+      w="100%"
     >
-      <Flex justifyContent="space-between">
-        <Box
-          w="90%"
-          padding="0.5rem"
-          fontSize="1.2rem"
-          fontWeight="bold"
-          textAlign="center"
-        >
-          Edit
-        </Box>
-        <Button
-          borderRadius="50%"
-          colorScheme="blue"
-          p="0"
-          variant="outline"
-          onClick={() => setOpenEdit(false)}
-        >
-          <FaTimes />
-        </Button>
-      </Flex>
-      <Box>
-        <Flex
-          direction="column"
-          justifyItems="center"
-          justifyContent="space-around"
-        >
-          <Box ml="1rem" mb="1rem" mt="1rem">
-            <label htmlFor="icon-button-file" style={{ cursor: "pointer" }}>
-              <input
-                id="icon-button-file"
-                type="file"
-                accept="image/*"
-                onChange={(e) => setSelect(e.target.files[0])}
-              />
-            </label>
-          </Box>
-          <Textarea
-            mb="1rem"
-            mt="1rem"
-            onChange={(e) => setAbout(e.target.value)}
-            placeholder="Here is a sample placeholder"
-            resize="none"
-          />
-          <Button
-            mt="2rem"
-            isDisabled={about && selectupload ? false : true}
-            borderRadius="2rem"
-            colorScheme="#1da1f2"
-            bg="var(--BRAND_BLUE)"
-            isLoading={status.state === "loading" ? true : false}
-            className="pst-btn"
-            variant="solid"
-            onClick={() => updateUser()}
+      <Box
+        borderRadius="0.5rem"
+        w="70%"
+        margin="auto"
+        h="50vh"
+        bg="white"
+        border="1px solid black"
+        zIndex="2"
+        mt="6rem"
+        opacity="100%"
+      >
+        <Flex justifyContent="space-between">
+          <Box
+            w="90%"
+            padding="0.5rem"
+            fontSize="1.2rem"
+            fontWeight="bold"
+            textAlign="center"
           >
-            Update
+            Edit
+          </Box>
+          <Button
+            borderRadius="50%"
+            colorScheme="blue"
+            p="0"
+            variant="outline"
+            onClick={() => setOpenEdit(false)}
+          >
+            <FaTimes />
           </Button>
-          {status.state === "fulfilled" ? (
-            <Box textAlign="center" fontWeight="bold" color="green">
-              updated Successfully
-            </Box>
-          ) : (
-            ""
-          )}
-          {status.state === "error" ? (
-            <Box textAlign="center" fontWeight="bold" color="red">
-              Something went wrong please try again
-            </Box>
-          ) : (
-            ""
-          )}
         </Flex>
+        <Box>
+          <Flex
+            direction="column"
+            justifyItems="center"
+            justifyContent="space-around"
+          >
+            <Box ml="1rem" mb="1rem" mt="1rem">
+              <label htmlFor="icon-button-file" style={{ cursor: "pointer" }}>
+                <input
+                  id="icon-button-file"
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => setSelect(e.target.files[0])}
+                />
+              </label>
+            </Box>
+            <Textarea
+              mb="1rem"
+              mt="1rem"
+              onChange={(e) => setAbout(e.target.value)}
+              placeholder="Here is a sample placeholder"
+              resize="none"
+            />
+            <Button
+              mt="2rem"
+              isDisabled={about && selectupload ? false : true}
+              borderRadius="2rem"
+              colorScheme="#1da1f2"
+              bg="var(--BRAND_BLUE)"
+              isLoading={status.state === "loading" ? true : false}
+              className="pst-btn"
+              variant="solid"
+              onClick={() => updateUser()}
+            >
+              Update
+            </Button>
+            {status.state === "fulfilled" ? (
+              <Box textAlign="center" fontWeight="bold" color="green">
+                updated Successfully
+              </Box>
+            ) : (
+              ""
+            )}
+            {status.state === "error" ? (
+              <Box textAlign="center" fontWeight="bold" color="red">
+                Something went wrong please try again
+              </Box>
+            ) : (
+              ""
+            )}
+          </Flex>
+        </Box>
       </Box>
     </Box>
   );
@@ -216,7 +226,7 @@ export function ProfilePage() {
               justifyContent="center"
               alignItems="center"
               width="10%"
-              onClick={()=>navigate(state?.from)}
+              onClick={() => navigate(state?.from)}
               mr="0.8rem"
             >
               <Box
