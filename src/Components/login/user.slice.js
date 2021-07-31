@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-
 const initialState = {
   userData: {
     isUserLoggedIn: false,
@@ -11,10 +10,10 @@ const initialState = {
   loginError: null,
   error: null,
 };
-
 export const userLogin = createAsyncThunk(
   "user/userLogin",
   async (credentials, { rejectWithValue }) => {
+    console.log("yes its work");
     try {
       const response = await axios.post(
         "https://gConnect-backend.shivam008.repl.co/auth/login",
@@ -51,6 +50,10 @@ export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
+    tokenHandler: (state, action) => {
+      state.userData.isUserLoggedIn = true;
+      console.log("inside token handler");
+    },
     addFollowing: (state, action) => {
       state.userData.following = action.payload;
     },
@@ -60,6 +63,8 @@ export const userSlice = createSlice({
     },
     userLogout: (state, action) => {
       state.userData.isUserLoggedIn = false;
+      state.loginStatus = "idle";
+      state.error = null;
       localStorage.removeItem("G_CONNECT_TOKEN");
     },
   },
@@ -79,10 +84,11 @@ export const userSlice = createSlice({
       }
     },
     [userLogin.rejected]: (state, action) => {
-      state.status = "error";
       localStorage.removeItem("G_CONNECT_TOKEN");
+      state.userData.isUserLoggedIn = false;
       state.error = action.payload.message;
       state.loginError = "error";
+      state.status = "error";
     },
     [userSignup.pending]: (state, action) => {
       state.signupStatus = "loading";
@@ -96,5 +102,6 @@ export const userSlice = createSlice({
     },
   },
 });
-export const { addFollowing, updateUsers, userLogout } = userSlice.actions;
+export const { addFollowing, updateUsers, tokenHandler, userLogout } =
+  userSlice.actions;
 export default userSlice.reducer;

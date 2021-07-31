@@ -39,7 +39,6 @@ export function Login() {
   const navigate = useNavigate();
   const [mobileWidth] = useMediaQuery("(max-width: 600px)");
   if (userData.userData.isUserLoggedIn) navigate("/");
-  console.log(userData.loginError,userData.error)
   return (
     <section className="login-bx">
       <Box
@@ -130,10 +129,16 @@ export function Login() {
           >
             {signup ? "Login" : "Signup"}
           </Box>
-           or login as
+          or login as
           <Box
             onClick={() =>
-              dispatch(userLogin({ email:"user12@gmail.com", password:"user1234"}))
+              dispatch(
+                userLogin({
+                  email: "user12@gmail.com",
+                  password: "user1234",
+                  guest: true,
+                })
+              )
             }
             d="inline"
             color="var(--BRAND_BLUE)"

@@ -1,5 +1,4 @@
 import "./post.css";
-import { IoEllipsisHorizontalOutline } from "react-icons/io5";
 import { useSelector, useDispatch } from "react-redux";
 import { BiMessageSquare } from "react-icons/bi";
 import {
@@ -8,9 +7,7 @@ import {
   Box,
   Flex,
   Input,
-  StackDivider,
   Button,
-  VStack,
   Avatar,
 } from "@chakra-ui/react";
 import { Link, useLocation } from "react-router-dom";

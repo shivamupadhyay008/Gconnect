@@ -1,17 +1,17 @@
 import "./App.css";
-import { Provider, useDispatch } from "react-redux";
-import { userLogin } from "./Components/login/user.slice";
+import { Provider, useDispatch, useSelector } from "react-redux";
+import { userLogin, tokenHandler } from "./Components/login/user.slice";
 import { store } from "./app/store";
 import MainCluster from "./Components/maincluster/maincluster";
 import RightCluster from "./Components/rightcluster/rightcluster";
 import { Login, SideNav } from "./Components";
 import { ChakraProvider } from "@chakra-ui/react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 export default function App() {
   const token = localStorage.getItem("G_CONNECT_TOKEN");
   const dispatch = useDispatch();
-  console.log(token);
   if (token) {
+    dispatch(tokenHandler());
     dispatch(userLogin({ token }));
   }
   return (

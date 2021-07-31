@@ -14,9 +14,7 @@ export const fetchPosts = createAsyncThunk(
   "post/fetchPosts",
   async (action, { rejectWithValue }) => {
     try {
-      console.log(action);
       const response = await axios.get(`${gcUrl}/post/feed/${action}`);
-      console.log(response.data.posts)
       return response.data.posts;
     } catch (error) {
       console.log(error.message);

@@ -10,7 +10,7 @@ export function Feed() {
   const postStatus = useSelector((state) => state.posts.status);
   const dispatch = useDispatch();
   useEffect(() => {
-    if (postStatus === "idle") {
+    if (postStatus === "idle" && user.isUserLoggedIn) {
       dispatch(fetchPosts(user._id));
       dispatch(fetchExplorePosts());
     }
@@ -28,7 +28,13 @@ export function Feed() {
       </Box>
       <CreatePost userImg={user.image} />
       {posts?.length === 0 ? (
-        <Box w="100%" textAlign="center" p="1rem" fontWeight="bold" color='Blue'>
+        <Box
+          w="100%"
+          textAlign="center"
+          p="1rem"
+          fontWeight="bold"
+          color="Blue"
+        >
           <NavLink to="connection">no posts start following people</NavLink>
         </Box>
       ) : (

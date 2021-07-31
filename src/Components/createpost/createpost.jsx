@@ -5,8 +5,6 @@ import { addNewPost, createPostApi } from "../post/posts.slice";
 import { Avatar, Box, Flex, Button } from "@chakra-ui/react";
 import TextareaAutosize from "react-textarea-autosize";
 import { IoImageOutline } from "react-icons/io5";
-import { AiOutlineGif } from "react-icons/ai";
-import { BsCameraVideo } from "react-icons/bs";
 import { FaTimes } from "react-icons/fa";
 import { useState } from "react";
 export function CreatePost({ userImg }) {
@@ -95,34 +93,6 @@ export function CreatePost({ userImg }) {
                         onChange={(e) => setSelect(e.target.files[0])}
                       />
                       <IoImageOutline size="1.2rem" />
-                    </label>
-                  </span>
-                  <span className="ps-icon">
-                    <label
-                      htmlFor="icon-button-file"
-                      style={{ cursor: "pointer" }}
-                    >
-                      <input
-                        id="icon-button-file"
-                        type="file"
-                        accept="image/*"
-                        onChange={(e) => setSelect(e.target.files[0])}
-                      />
-                      <AiOutlineGif size="1.2rem" />
-                    </label>
-                  </span>
-                  <span className="ps-icon">
-                    <label
-                      htmlFor="icon-button-file"
-                      style={{ cursor: "pointer" }}
-                    >
-                      <input
-                        id="icon-button-file"
-                        type="file"
-                        accept="image/*"
-                        onChange={(e) => setSelect(e.target.files[0])}
-                      />
-                      <BsCameraVideo size="1.2rem" />
                     </label>
                   </span>
                 </Box>
